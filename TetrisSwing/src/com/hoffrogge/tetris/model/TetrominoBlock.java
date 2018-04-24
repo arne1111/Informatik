@@ -8,7 +8,7 @@ import com.hoffrogge.lehreinheit04.Punkt;
 
 public class TetrominoBlock implements GeometrischeFigur {
 
-	private int durchmesser = 10;
+	private int durchmesser = TetrisKonstanten.BLOCK_BREITE * 2;
 	private Farbe farbe = new Farbe(0, 0, 0);
 	private int x;
 	private int y;

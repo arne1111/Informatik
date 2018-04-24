@@ -12,16 +12,19 @@ public class Spielfenster extends JFrame {
 	public Spielfenster() {
 
 		setTitle("Hoffrogge Tetris Klon");
-		setSize(new Dimension(1024, 768));
-		setResizable(true);
-		setLocationRelativeTo(null);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
+		setSize(new Dimension((int) (TetrisKonstanten.SPIELFELD_BREITE * 1.5), TetrisKonstanten.SPIELFELD_HOEHE));
+		setResizable(true);
+		setLocationRelativeTo(null);
+
 		spielfeld = new Spielfeld();
+
 		add(spielfeld);
 
-		// pack();
 		setVisible(true);
+
+		spielfeld.createBufferStrategy(2);
 	}
 
 	public Spielfeld getSpielfeld() {
