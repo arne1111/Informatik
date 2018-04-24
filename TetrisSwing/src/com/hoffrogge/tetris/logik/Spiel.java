@@ -27,6 +27,9 @@ public class Spiel implements Runnable {
 			spielfeld.aktualisieren();
 			spielfeld.darstellen();
 
+			if (spielfeld.istSpielfeldVoll())
+				beendeSpiel();
+
 			try {
 
 				Thread.sleep(TetrisKonstanten.SPIEL_GESCHWINDIGKEIT);

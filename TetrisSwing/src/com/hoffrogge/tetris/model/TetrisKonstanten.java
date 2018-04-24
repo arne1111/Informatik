@@ -9,6 +9,6 @@ public class TetrisKonstanten {
 	public static final int SPIELFELD_BREITE = BLOCK_BREITE * 10;
 	public static final int SPIELFELD_HOEHE = BLOCK_BREITE * 20;
 
-	public static final int SPIEL_GESCHWINDIGKEIT = 1000;
-	public static final int TETROMINO_FALL_HOEHE = 0;
+	public static final int SPIEL_GESCHWINDIGKEIT = 50;
+	public static final int TETROMINO_FALL_HOEHE = BLOCK_BREITE;
 }

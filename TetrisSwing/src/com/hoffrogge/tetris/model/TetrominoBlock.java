@@ -9,14 +9,16 @@ import com.hoffrogge.lehreinheit04.Punkt;
 public class TetrominoBlock implements GeometrischeFigur {
 
 	private int durchmesser = TetrisKonstanten.BLOCK_BREITE * 2;
-	private Farbe farbe = new Farbe(0, 0, 0);
 	private int x;
 	private int y;
+	private ViertelBlock viertelBlock;
 
 	public TetrominoBlock(int x, int y) {
 
 		this.x = x;
 		this.y = y;
+
+		viertelBlock = new ViertelBlock();
 	}
 
 	@Override
@@ -26,7 +28,6 @@ public class TetrominoBlock implements GeometrischeFigur {
 
 	@Override
 	public void setLinienFarbe(Farbe farbe) {
-		this.farbe = farbe;
 	}
 
 	@Override
@@ -43,21 +44,41 @@ public class TetrominoBlock implements GeometrischeFigur {
 
 		int kantenLaengeViertelBlock = durchmesser / 2;
 
-		if (farbe != null)
-			graphics.setColor(farbe.konvertiereZuColor());
+		viertelBlock.setMittelpunkt(x, y);
+		viertelBlock.zeichnen(graphics);
 
-		graphics.drawRect(x - kantenLaengeViertelBlock, y - kantenLaengeViertelBlock, kantenLaengeViertelBlock,
-				kantenLaengeViertelBlock);
+		viertelBlock.setMittelpunkt(x + kantenLaengeViertelBlock, y);
+		viertelBlock.zeichnen(graphics);
 
-		graphics.drawRect(x, y - kantenLaengeViertelBlock, kantenLaengeViertelBlock, kantenLaengeViertelBlock);
+		viertelBlock.setMittelpunkt(x, y + kantenLaengeViertelBlock);
+		viertelBlock.zeichnen(graphics);
 
-		graphics.drawRect(x - kantenLaengeViertelBlock, y, kantenLaengeViertelBlock, kantenLaengeViertelBlock);
-
-		graphics.drawRect(x, y, kantenLaengeViertelBlock, kantenLaengeViertelBlock);
+		viertelBlock.setMittelpunkt(x + kantenLaengeViertelBlock, y + kantenLaengeViertelBlock);
+		viertelBlock.zeichnen(graphics);
 	}
 
 	@Override
 	public Punkt getMittelPunkt() {
 		return new Punkt(x, y);
+	}
+
+	@Override
+	public int getHoechstesY() {
+		return y - durchmesser / 2;
+	}
+
+	@Override
+	public int getTiefstesY() {
+		return y + durchmesser / 2;
+	}
+
+	@Override
+	public int getKanteLinksX() {
+		return x - durchmesser / 2;
+	}
+
+	@Override
+	public int getKanteRechtsX() {
+		return x + durchmesser / 2;
 	}
 }
