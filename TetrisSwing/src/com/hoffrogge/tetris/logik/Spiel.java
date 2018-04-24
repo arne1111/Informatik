@@ -4,14 +4,15 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import com.hoffrogge.tetris.model.Spielfeld;
+import com.hoffrogge.tetris.model.TetrisKonstanten;
 
-public class GameLoop implements Runnable {
+public class Spiel implements Runnable {
 
 	private Spielfeld spielfeld;
 	private boolean spielLaeuft;
-	private Thread gameLoopThread;
+	private Thread spielThread;
 
-	public GameLoop(Spielfeld spielfeld) {
+	public Spiel(Spielfeld spielfeld) {
 
 		this.spielfeld = spielfeld;
 		spielLaeuft = true;
@@ -22,13 +23,13 @@ public class GameLoop implements Runnable {
 
 		while (spielLaeuft) {
 
-			// TODO Spielereingaben verarbeiten
+			spielfeld.spielerEingabenVerarbeiten();
 			spielfeld.aktualisieren();
 			spielfeld.darstellen();
 
 			try {
 
-				Thread.sleep(10);
+				Thread.sleep(TetrisKonstanten.SPIEL_GESCHWINDIGKEIT);
 
 			} catch (InterruptedException e) {
 				Logger.getGlobal().log(Level.OFF, e.getMessage(), e);
@@ -39,8 +40,9 @@ public class GameLoop implements Runnable {
 	}
 
 	public void starteSpiel() {
-		gameLoopThread = new Thread(this);
-		gameLoopThread.start();
+
+		spielThread = new Thread(this);
+		spielThread.start();
 	}
 
 	public void beendeSpiel() {
@@ -48,7 +50,7 @@ public class GameLoop implements Runnable {
 		spielLaeuft = false;
 
 		try {
-			gameLoopThread.join();
+			spielThread.join();
 		} catch (InterruptedException e) {
 			Logger.getGlobal().log(Level.OFF, e.getMessage(), e);
 			Thread.currentThread().interrupt();

@@ -1,45 +1,24 @@
 package com.hoffrogge.tetris.model;
 
+import java.awt.Canvas;
 import java.awt.Color;
-import java.awt.Dimension;
-import java.awt.EventQueue;
 import java.awt.Font;
 import java.awt.Graphics;
-
-import javax.swing.BorderFactory;
-import javax.swing.JPanel;
 
 import com.hoffrogge.lehreinheit04.GeometrischeFigur;
 import com.hoffrogge.lehreinheit04.Punkt;
 
 @SuppressWarnings("serial")
-public class Spielfeld extends JPanel {
+public class Spielfeld extends Canvas {
 
-	transient GeometrischeFigur fallenderSpielstein;
+	private transient GeometrischeFigur fallenderSpielstein;
 
 	public Spielfeld() {
-
-		setBorder(BorderFactory.createLineBorder(Color.black));
-
-		setBackground(Color.GRAY);
-
+		/* Konstruktor */
 	}
 
-	@Override
-	public Dimension getPreferredSize() {
-		return new Dimension(750, 760);
-	}
-
-	@Override
-	public void paintComponent(Graphics g) {
-
-		super.paintComponent(g);
-
-		Font f = new Font("Helvetica", Font.PLAIN, 20);
-
-		g.setFont(f);
-		g.drawString("Tetris Spielfeld", 10, 20);
-
+	public void spielerEingabenVerarbeiten() {
+		/* Hier passiert noch nichts. */
 	}
 
 	public void aktualisieren() {
@@ -47,36 +26,52 @@ public class Spielfeld extends JPanel {
 		if (fallenderSpielstein == null)
 			fallenderSpielstein = neuerZufaelligerSpielstein();
 
-		Punkt mittelPunkt = fallenderSpielstein.getMittelPunkt();
-		fallenderSpielstein.setMittelpunkt(mittelPunkt.getX(), mittelPunkt.getY() + 1);
+		if (fallenderSpielstein != null) {
 
+			Punkt mittelPunkt = fallenderSpielstein.getMittelPunkt();
+			fallenderSpielstein.setMittelpunkt(mittelPunkt.getX(),
+					mittelPunkt.getY() + TetrisKonstanten.TETROMINO_FALL_HOEHE);
+		}
 	}
 
 	public void darstellen() {
 
-		EventQueue.invokeLater(new Runnable() {
+		Graphics g = null;
 
-			@Override
-			public void run() {
+		try {
 
-				Graphics g = getGraphics();
+			g = getBufferStrategy().getDrawGraphics();
 
-				paintComponent(g);
+			zeichneSpielfeld(g);
 
-				if (fallenderSpielstein != null)
-					fallenderSpielstein.zeichnen(g);
+			if (fallenderSpielstein != null)
+				fallenderSpielstein.zeichnen(g);
 
+		} finally {
+			if (g != null)
 				g.dispose();
+		}
 
-			}
-		});
+		getBufferStrategy().show();
+
 	}
 
-	GeometrischeFigur neuerZufaelligerSpielstein() {
+	private void zeichneSpielfeld(Graphics g) {
 
-		TetrominoBlock block = new TetrominoBlock(this.getWidth() / 2, 100);
-		block.setDurchmesser(100);
+		/* Hintergrund des Spielfeldes */
+		g.setColor(Color.GRAY);
+		g.fillRect(0, 0, TetrisKonstanten.SPIELFELD_BREITE, TetrisKonstanten.SPIELFELD_HOEHE);
 
-		return block;
+		/* Text auf dem Spielfeld */
+		Font f = new Font("Helvetica", Font.PLAIN, 20);
+
+		g.setFont(f);
+		g.setColor(Color.WHITE);
+		g.drawString("Tetris Spielfeld", 10, 20);
+	}
+
+	private GeometrischeFigur neuerZufaelligerSpielstein() {
+
+		return null;
 	}
 }

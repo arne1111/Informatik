@@ -1,6 +1,6 @@
 package com.hoffrogge.tetris.start;
 
-import com.hoffrogge.tetris.logik.GameLoop;
+import com.hoffrogge.tetris.logik.Spiel;
 import com.hoffrogge.tetris.model.Spielfenster;
 
 public class Main {
@@ -9,8 +9,8 @@ public class Main {
 
 		Spielfenster spielfenster = new Spielfenster();
 
-		GameLoop gameLoop = new GameLoop(spielfenster.getSpielfeld());
+		Spiel spiel = new Spiel(spielfenster.getSpielfeld());
 
-		gameLoop.starteSpiel();
+		spiel.starteSpiel();
 	}
 }

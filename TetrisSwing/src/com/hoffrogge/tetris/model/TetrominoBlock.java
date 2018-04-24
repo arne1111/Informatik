@@ -8,10 +8,10 @@ import com.hoffrogge.lehreinheit04.Punkt;
 
 public class TetrominoBlock implements GeometrischeFigur {
 
-	int durchmesser = 10;
-	Farbe farbe = new Farbe(0, 0, 0);
-	int x;
-	int y;
+	private int durchmesser = TetrisKonstanten.BLOCK_BREITE * 2;
+	private Farbe farbe = new Farbe(0, 0, 0);
+	private int x;
+	private int y;
 
 	public TetrominoBlock(int x, int y) {
 
@@ -54,7 +54,6 @@ public class TetrominoBlock implements GeometrischeFigur {
 		graphics.drawRect(x - kantenLaengeViertelBlock, y, kantenLaengeViertelBlock, kantenLaengeViertelBlock);
 
 		graphics.drawRect(x, y, kantenLaengeViertelBlock, kantenLaengeViertelBlock);
-
 	}
 
 	@Override
