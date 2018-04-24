@@ -5,7 +5,7 @@ public class TetrisKonstanten {
 	private TetrisKonstanten() {
 	}
 
-	public static final int BLOCK_BREITE = 50;
+	public static final int BLOCK_BREITE = 40;
 	public static final int SPIELFELD_BREITE = BLOCK_BREITE * 10;
 	public static final int SPIELFELD_HOEHE = BLOCK_BREITE * 20;
 
