@@ -2,6 +2,7 @@ package com.hoffrogge.tetris.model;
 
 import java.awt.Color;
 import java.awt.Dimension;
+import java.awt.EventQueue;
 import java.awt.Font;
 import java.awt.Graphics;
 
@@ -14,13 +15,14 @@ import com.hoffrogge.lehreinheit04.Punkt;
 @SuppressWarnings("serial")
 public class Spielfeld extends JPanel {
 
-	private transient GeometrischeFigur fallenderSpielstein;
+	transient GeometrischeFigur fallenderSpielstein;
 
 	public Spielfeld() {
 
 		setBorder(BorderFactory.createLineBorder(Color.black));
 
 		setBackground(Color.GRAY);
+
 	}
 
 	@Override
@@ -37,6 +39,7 @@ public class Spielfeld extends JPanel {
 
 		g.setFont(f);
 		g.drawString("Tetris Spielfeld", 10, 20);
+
 	}
 
 	public void aktualisieren() {
@@ -51,15 +54,25 @@ public class Spielfeld extends JPanel {
 
 	public void darstellen() {
 
-		Graphics g = getGraphics();
+		EventQueue.invokeLater(new Runnable() {
 
-		paintComponent(g);
+			@Override
+			public void run() {
 
-		if (fallenderSpielstein != null)
-			fallenderSpielstein.zeichnen(g);
+				Graphics g = getGraphics();
+
+				paintComponent(g);
+
+				if (fallenderSpielstein != null)
+					fallenderSpielstein.zeichnen(g);
+
+				g.dispose();
+
+			}
+		});
 	}
 
-	private GeometrischeFigur neuerZufaelligerSpielstein() {
+	GeometrischeFigur neuerZufaelligerSpielstein() {
 
 		TetrominoBlock block = new TetrominoBlock(this.getWidth() / 2, 100);
 		block.setDurchmesser(100);
