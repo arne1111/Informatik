@@ -41,6 +41,9 @@ public class TetrominoFactory {
 		case L:
 			return new TetrominoL(Math.max(0, x - TetrisKonstanten.BLOCK_BREITE), y);
 
+		case UMGEDREHTES_L:
+			return new TetrominoUmgedrehtesL(Math.max(0, x - TetrisKonstanten.BLOCK_BREITE), y);
+
 		default:
 			throw new IllegalStateException("TetrominoTyp " + typ + " ist nicht bekannt!");
 		}
