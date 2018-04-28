@@ -7,9 +7,6 @@ import java.awt.Graphics;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.hoffrogge.lehreinheit04.GeometrischeFigur;
-import com.hoffrogge.lehreinheit04.Punkt;
-
 @SuppressWarnings("serial")
 public class Spielfeld extends Canvas {
 

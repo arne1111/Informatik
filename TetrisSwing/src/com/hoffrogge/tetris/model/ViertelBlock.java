@@ -3,10 +3,6 @@ package com.hoffrogge.tetris.model;
 import java.awt.Graphics;
 import java.util.Random;
 
-import com.hoffrogge.lehreinheit03.Farbe;
-import com.hoffrogge.lehreinheit04.GeometrischeFigur;
-import com.hoffrogge.lehreinheit04.Punkt;
-
 public class ViertelBlock implements GeometrischeFigur {
 
 	private int x;
