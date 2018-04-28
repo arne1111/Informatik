@@ -1,6 +1,9 @@
 package com.hoffrogge.tetris.model;
 
 import java.awt.Graphics;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 
 public abstract class Tetromino implements GeometrischeFigur {
 
@@ -9,25 +12,30 @@ public abstract class Tetromino implements GeometrischeFigur {
 	int y;
 	Farbe linienFarbe;
 
-	ViertelBlock viertelBlock1;
-	ViertelBlock viertelBlock2;
-	ViertelBlock viertelBlock3;
-	ViertelBlock viertelBlock4;
+	List<ViertelBlock> viertelBloecke = new ArrayList<>(4);
 
 	public Tetromino() {
 		super();
 	}
 
-	public boolean faelltAuf(GeometrischeFigur gefallenerStein) {
+	public boolean faelltAuf(Tetromino gefallenerStein) {
 
-		int hoechstesY = gefallenerStein.getHoechstesY();
-		int kanteLinksX = gefallenerStein.getKanteLinksX();
-		int kanteRechtsX = gefallenerStein.getKanteRechtsX();
+		if (viertelBloecke.isEmpty())
+			return false;
 
-		if (getTiefstesY() >= hoechstesY && kanteLinksX < getKanteRechtsX() && kanteRechtsX > getKanteLinksX())
-			return true;
+		List<ViertelBlock> gefalleneViertelBloecke = gefallenerStein.getViertelBloecke();
+
+		for (ViertelBlock fallenderBlock : viertelBloecke)
+			for (ViertelBlock gefallenerBlock : gefalleneViertelBloecke)
+				if (fallenderBlock.getX() == gefallenerBlock.getX()
+						&& fallenderBlock.getTiefstesY() == gefallenerBlock.getHoechstesY())
+					return true;
 
 		return false;
+	}
+
+	private List<ViertelBlock> getViertelBloecke() {
+		return Collections.unmodifiableList(viertelBloecke);
 	}
 
 	@Override
@@ -51,24 +59,89 @@ public abstract class Tetromino implements GeometrischeFigur {
 		return new Punkt(x, y);
 	}
 
+	@Override
+	public int getHoechstesY() {
+
+		int hoechstesY = TetrisKonstanten.SPIELFELD_HOEHE;
+
+		for (ViertelBlock block : viertelBloecke)
+			if (block.getHoechstesY() < hoechstesY)
+				hoechstesY = block.getHoechstesY();
+
+		return hoechstesY;
+	}
+
+	@Override
+	public int getTiefstesY() {
+
+		int tiefstesY = 0;
+
+		for (ViertelBlock block : viertelBloecke)
+			if (block.getTiefstesY() > tiefstesY)
+				tiefstesY = block.getTiefstesY();
+
+		return tiefstesY;
+	}
+
+	@Override
+	public int getKanteLinksX() {
+
+		int kanteLinksX = TetrisKonstanten.SPIELFELD_BREITE;
+
+		for (ViertelBlock block : viertelBloecke)
+			if (block.getKanteLinksX() < kanteLinksX)
+				kanteLinksX = block.getKanteLinksX();
+
+		return kanteLinksX;
+	}
+
+	@Override
+	public int getKanteRechtsX() {
+
+		int kanteRechtsX = 0;
+
+		for (ViertelBlock block : viertelBloecke)
+			if (block.getKanteRechtsX() > kanteRechtsX)
+				kanteRechtsX = block.getKanteRechtsX();
+
+		return kanteRechtsX;
+	}
+
+	@Override
+	public void zeichnen(Graphics graphics) {
+
+		if (graphics == null)
+			return;
+
+		zeichneViertelBloecke(graphics);
+	}
+
 	void zeichneViertelBloecke(Graphics graphics) {
+
+		if (viertelBloecke.isEmpty())
+			return;
 
 		if (linienFarbe == null)
 			linienFarbe = new Farbe(0, 0, 0);
 
-		viertelBlock1.setLinienFarbe(linienFarbe);
-		viertelBlock2.setLinienFarbe(linienFarbe);
-		viertelBlock3.setLinienFarbe(linienFarbe);
-		viertelBlock4.setLinienFarbe(linienFarbe);
+		Farbe fuellFarbe = viertelBloecke.get(0).getFuellFarbe();
 
-		Farbe fuellFarbe = viertelBlock1.getFuellFarbe();
-		viertelBlock2.setFuellFarbe(fuellFarbe);
-		viertelBlock3.setFuellFarbe(fuellFarbe);
-		viertelBlock4.setFuellFarbe(fuellFarbe);
+		for (ViertelBlock block : viertelBloecke) {
 
-		viertelBlock1.zeichnen(graphics);
-		viertelBlock2.zeichnen(graphics);
-		viertelBlock3.zeichnen(graphics);
-		viertelBlock4.zeichnen(graphics);
+			block.setLinienFarbe(linienFarbe);
+			block.setFuellFarbe(fuellFarbe);
+			block.zeichnen(graphics);
+		}
+	}
+
+	public void falle() {
+
+		if (viertelBloecke.isEmpty())
+			return;
+
+		for (ViertelBlock block : viertelBloecke) {
+
+			block.setY(block.getY() + TetrisKonstanten.TETROMINO_FALL_HOEHE);
+		}
 	}
 }

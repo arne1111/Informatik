@@ -29,9 +29,7 @@ public class Spielfeld extends Canvas {
 
 		if (fallenderSpielstein != null) {
 
-			Punkt mittelPunkt = fallenderSpielstein.getMittelPunkt();
-			fallenderSpielstein.setMittelpunkt(mittelPunkt.getX(),
-					mittelPunkt.getY() + TetrisKonstanten.TETROMINO_FALL_HOEHE);
+			fallenderSpielstein.falle();
 
 			if (hatFallenderSteinBodenErreicht() || faelltFallenderSteinAufAnderenStein()) {
 
@@ -99,7 +97,7 @@ public class Spielfeld extends Canvas {
 	}
 
 	private boolean hatFallenderSteinBodenErreicht() {
-		return fallenderSpielstein.getTiefstesY() == TetrisKonstanten.SPIELFELD_HOEHE - TetrisKonstanten.BLOCK_BREITE;
+		return fallenderSpielstein.getTiefstesY() == TetrisKonstanten.SPIELFELD_HOEHE;
 	}
 
 	private boolean faelltFallenderSteinAufAnderenStein() {
@@ -107,7 +105,7 @@ public class Spielfeld extends Canvas {
 		if (gefalleneSteine.isEmpty())
 			return false;
 
-		for (GeometrischeFigur gefallenerStein : gefalleneSteine)
+		for (Tetromino gefallenerStein : gefalleneSteine)
 			if (fallenderSpielstein.faelltAuf(gefallenerStein))
 				return true;
 

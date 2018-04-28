@@ -1,7 +1,5 @@
 package com.hoffrogge.tetris.model;
 
-import java.awt.Graphics;
-
 public class TetrominoLanger extends Tetromino {
 
 	private int kantenLaengeViertelBlock;
@@ -18,44 +16,10 @@ public class TetrominoLanger extends Tetromino {
 		durchmesser = TetrisKonstanten.BLOCK_BREITE;
 		kantenLaengeViertelBlock = durchmesser;
 
-		viertelBlock1 = new ViertelBlock(x, y);
-		viertelBlock2 = new ViertelBlock(x, y + kantenLaengeViertelBlock);
-		viertelBlock3 = new ViertelBlock(x, y + kantenLaengeViertelBlock * 2);
-		viertelBlock4 = new ViertelBlock(x, y + kantenLaengeViertelBlock * 3);
-	}
-
-	@Override
-	public int getHoechstesY() {
-		return viertelBlock1.getHoechstesY() - TetrisKonstanten.BLOCK_BREITE;
-	}
-
-	@Override
-	public int getTiefstesY() {
-		return viertelBlock4.getTiefstesY();
-	}
-
-	@Override
-	public int getKanteLinksX() {
-		return viertelBlock1.getKanteLinksX();
-	}
-
-	@Override
-	public int getKanteRechtsX() {
-		return viertelBlock1.getKanteRechtsX();
-	}
-
-	@Override
-	public void zeichnen(Graphics graphics) {
-
-		if (graphics == null)
-			return;
-
-		viertelBlock1.setMittelpunkt(x, y);
-		viertelBlock2.setMittelpunkt(x, y + kantenLaengeViertelBlock);
-		viertelBlock3.setMittelpunkt(x, y + kantenLaengeViertelBlock * 2);
-		viertelBlock4.setMittelpunkt(x, y + kantenLaengeViertelBlock * 3);
-
-		zeichneViertelBloecke(graphics);
+		viertelBloecke.add(new ViertelBlock(x, y));
+		viertelBloecke.add(new ViertelBlock(x, y + kantenLaengeViertelBlock));
+		viertelBloecke.add(new ViertelBlock(x, y + kantenLaengeViertelBlock * 2));
+		viertelBloecke.add(new ViertelBlock(x, y + kantenLaengeViertelBlock * 3));
 	}
 
 }
