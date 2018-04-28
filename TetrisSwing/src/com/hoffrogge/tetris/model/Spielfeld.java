@@ -6,17 +6,15 @@ import java.awt.Font;
 import java.awt.Graphics;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Random;
 
-import com.hoffrogge.lehreinheit03.Farbe;
 import com.hoffrogge.lehreinheit04.GeometrischeFigur;
 import com.hoffrogge.lehreinheit04.Punkt;
 
 @SuppressWarnings("serial")
 public class Spielfeld extends Canvas {
 
-	private transient GeometrischeFigur fallenderSpielstein;
-	private List<GeometrischeFigur> gefalleneSteine;
+	private transient Tetromino fallenderSpielstein;
+	private List<Tetromino> gefalleneSteine;
 
 	public Spielfeld() {
 		/* Konstruktor */
@@ -48,24 +46,6 @@ public class Spielfeld extends Canvas {
 		}
 	}
 
-	private boolean hatFallenderSteinBodenErreicht() {
-		return fallenderSpielstein.getTiefstesY() == TetrisKonstanten.SPIELFELD_HOEHE - TetrisKonstanten.BLOCK_BREITE;
-	}
-
-	private boolean faelltFallenderSteinAufAnderenStein() {
-
-		if (gefalleneSteine.isEmpty())
-			return false;
-
-		for (GeometrischeFigur gefallenerStein : gefalleneSteine)
-			if (fallenderSpielstein.getTiefstesY() == gefallenerStein.getHoechstesY()
-					&& (fallenderSpielstein.getKanteLinksX() < gefallenerStein.getKanteRechtsX()
-							&& fallenderSpielstein.getKanteRechtsX() > gefallenerStein.getKanteLinksX()))
-				return true;
-
-		return false;
-	}
-
 	public void darstellen() {
 
 		Graphics g = null;
@@ -91,7 +71,7 @@ public class Spielfeld extends Canvas {
 
 	}
 
-	private void zeichneSpielfeld(Graphics g) {
+	private static void zeichneSpielfeld(Graphics g) {
 
 		/* Hintergrund des Spielfeldes */
 		g.setColor(Color.GRAY);
@@ -105,22 +85,8 @@ public class Spielfeld extends Canvas {
 		g.drawString("Tetris Spielfeld", 10, 20);
 	}
 
-	private GeometrischeFigur neuerZufaelligerSpielstein() {
-
-		Random r = new Random();
-
-		int multiplikator = TetrisKonstanten.SPIELFELD_BREITE / TetrisKonstanten.BLOCK_BREITE;
-
-		TetrominoBlock tetrominoBlock = new TetrominoBlock(
-				(r.nextInt(multiplikator - 1)) * TetrisKonstanten.BLOCK_BREITE, -TetrisKonstanten.BLOCK_BREITE);
-
-		tetrominoBlock.setLinienFarbe(new Farbe(r.nextInt(255), r.nextInt(255), r.nextInt(255)));
-
-		ViertelBlock viertelBlock = new ViertelBlock();
-		viertelBlock.setMittelpunkt((r.nextInt(multiplikator)) * TetrisKonstanten.BLOCK_BREITE,
-				TetrisKonstanten.BLOCK_BREITE);
-
-		return tetrominoBlock;
+	private static Tetromino neuerZufaelligerSpielstein() {
+		return TetrominoFactory.erstelleZufaelligenTetromino();
 	}
 
 	public boolean istSpielfeldVoll() {
@@ -131,6 +97,22 @@ public class Spielfeld extends Canvas {
 				return true;
 
 		}
+
+		return false;
+	}
+
+	private boolean hatFallenderSteinBodenErreicht() {
+		return fallenderSpielstein.getTiefstesY() == TetrisKonstanten.SPIELFELD_HOEHE - TetrisKonstanten.BLOCK_BREITE;
+	}
+
+	private boolean faelltFallenderSteinAufAnderenStein() {
+
+		if (gefalleneSteine.isEmpty())
+			return false;
+
+		for (GeometrischeFigur gefallenerStein : gefalleneSteine)
+			if (fallenderSpielstein.faelltAuf(gefallenerStein))
+				return true;
 
 		return false;
 	}

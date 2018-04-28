@@ -15,10 +15,10 @@ public class ViertelBlock implements GeometrischeFigur {
 	private Farbe linienFarbe;
 	private Farbe fuellFarbe;
 
-	public ViertelBlock() {
+	public ViertelBlock(int x, int y) {
 
-		x = TetrisKonstanten.BLOCK_BREITE;
-		y = TetrisKonstanten.BLOCK_BREITE;
+		this.x = x;
+		this.y = y;
 		kantenLaengeViertelBlock = TetrisKonstanten.BLOCK_BREITE;
 
 		Random r = new Random();
@@ -46,6 +46,18 @@ public class ViertelBlock implements GeometrischeFigur {
 	@Override
 	public void setLinienFarbe(Farbe farbe) {
 		this.linienFarbe = farbe;
+	}
+
+	public Farbe getLinienFarbe() {
+		return linienFarbe;
+	}
+
+	public Farbe getFuellFarbe() {
+		return fuellFarbe;
+	}
+
+	public void setFuellFarbe(Farbe fuellFarbe) {
+		this.fuellFarbe = fuellFarbe;
 	}
 
 	@Override

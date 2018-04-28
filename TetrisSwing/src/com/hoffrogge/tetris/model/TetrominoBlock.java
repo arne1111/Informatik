@@ -2,38 +2,29 @@ package com.hoffrogge.tetris.model;
 
 import java.awt.Graphics;
 
-import com.hoffrogge.lehreinheit03.Farbe;
 import com.hoffrogge.lehreinheit04.GeometrischeFigur;
-import com.hoffrogge.lehreinheit04.Punkt;
 
-public class TetrominoBlock implements GeometrischeFigur {
+public class TetrominoBlock extends Tetromino {
 
-	private int durchmesser = TetrisKonstanten.BLOCK_BREITE * 2;
-	private int x;
-	private int y;
-	private ViertelBlock viertelBlock;
+	private int kantenLaengeViertelBlock;
+
+	public TetrominoBlock() {
+		this(TetrisKonstanten.SPIELFELD_BREITE / 2, -TetrisKonstanten.BLOCK_BREITE * 2);
+	}
 
 	public TetrominoBlock(int x, int y) {
 
 		this.x = x;
 		this.y = y;
 
-		viertelBlock = new ViertelBlock();
-	}
+		durchmesser = TetrisKonstanten.BLOCK_BREITE * 2;
+		kantenLaengeViertelBlock = durchmesser / 2;
 
-	@Override
-	public void setDurchmesser(int d) {
-		this.durchmesser = d;
-	}
+		viertelBlock1 = new ViertelBlock(x, y);
+		viertelBlock2 = new ViertelBlock(x + kantenLaengeViertelBlock, y);
+		viertelBlock3 = new ViertelBlock(x, y + kantenLaengeViertelBlock);
+		viertelBlock4 = new ViertelBlock(x + kantenLaengeViertelBlock, y + kantenLaengeViertelBlock);
 
-	@Override
-	public void setLinienFarbe(Farbe farbe) {
-	}
-
-	@Override
-	public void setMittelpunkt(int x, int y) {
-		this.x = x;
-		this.y = y;
 	}
 
 	@Override
@@ -42,24 +33,12 @@ public class TetrominoBlock implements GeometrischeFigur {
 		if (graphics == null)
 			return;
 
-		int kantenLaengeViertelBlock = durchmesser / 2;
+		viertelBlock1.setMittelpunkt(x, y);
+		viertelBlock2.setMittelpunkt(x + kantenLaengeViertelBlock, y);
+		viertelBlock3.setMittelpunkt(x, y + kantenLaengeViertelBlock);
+		viertelBlock4.setMittelpunkt(x + kantenLaengeViertelBlock, y + kantenLaengeViertelBlock);
 
-		viertelBlock.setMittelpunkt(x, y);
-		viertelBlock.zeichnen(graphics);
-
-		viertelBlock.setMittelpunkt(x + kantenLaengeViertelBlock, y);
-		viertelBlock.zeichnen(graphics);
-
-		viertelBlock.setMittelpunkt(x, y + kantenLaengeViertelBlock);
-		viertelBlock.zeichnen(graphics);
-
-		viertelBlock.setMittelpunkt(x + kantenLaengeViertelBlock, y + kantenLaengeViertelBlock);
-		viertelBlock.zeichnen(graphics);
-	}
-
-	@Override
-	public Punkt getMittelPunkt() {
-		return new Punkt(x, y);
+		zeichneViertelBloecke(graphics);
 	}
 
 	@Override
@@ -74,11 +53,24 @@ public class TetrominoBlock implements GeometrischeFigur {
 
 	@Override
 	public int getKanteLinksX() {
-		return x - durchmesser / 2;
+		return x;
 	}
 
 	@Override
 	public int getKanteRechtsX() {
-		return x + durchmesser / 2;
+		return x + durchmesser;
+	}
+
+	@Override
+	public boolean faelltAuf(GeometrischeFigur gefallenerStein) {
+
+		int hoechstesY = gefallenerStein.getHoechstesY();
+		int kanteLinksX = gefallenerStein.getKanteLinksX();
+		int kanteRechtsX = gefallenerStein.getKanteRechtsX();
+
+		if (getTiefstesY() >= hoechstesY && kanteLinksX < getKanteRechtsX() && kanteRechtsX > getKanteLinksX())
+			return true;
+
+		return false;
 	}
 }
