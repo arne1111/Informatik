@@ -2,15 +2,15 @@ package com.hoffrogge.tetris.model;
 
 import java.awt.Graphics;
 
-public class TetrominoLanger extends Tetromino {
+public class TetrominoL extends Tetromino {
 
 	private int kantenLaengeViertelBlock;
 
-	public TetrominoLanger() {
+	public TetrominoL() {
 		this(TetrisKonstanten.SPIELFELD_BREITE / 2, -TetrisKonstanten.BLOCK_BREITE * 4);
 	}
 
-	public TetrominoLanger(int x, int y) {
+	public TetrominoL(int x, int y) {
 
 		this.x = x;
 		this.y = y;
@@ -21,17 +21,17 @@ public class TetrominoLanger extends Tetromino {
 		viertelBlock1 = new ViertelBlock(x, y);
 		viertelBlock2 = new ViertelBlock(x, y + kantenLaengeViertelBlock);
 		viertelBlock3 = new ViertelBlock(x, y + kantenLaengeViertelBlock * 2);
-		viertelBlock4 = new ViertelBlock(x, y + kantenLaengeViertelBlock * 3);
+		viertelBlock4 = new ViertelBlock(x + kantenLaengeViertelBlock, y + kantenLaengeViertelBlock * 2);
 	}
 
 	@Override
 	public int getHoechstesY() {
-		return viertelBlock1.getHoechstesY() - TetrisKonstanten.BLOCK_BREITE;
+		return viertelBlock1.getHoechstesY();
 	}
 
 	@Override
 	public int getTiefstesY() {
-		return viertelBlock4.getTiefstesY();
+		return viertelBlock3.getTiefstesY();
 	}
 
 	@Override
@@ -41,7 +41,7 @@ public class TetrominoLanger extends Tetromino {
 
 	@Override
 	public int getKanteRechtsX() {
-		return viertelBlock1.getKanteRechtsX();
+		return viertelBlock4.getKanteRechtsX();
 	}
 
 	@Override
@@ -53,9 +53,8 @@ public class TetrominoLanger extends Tetromino {
 		viertelBlock1.setMittelpunkt(x, y);
 		viertelBlock2.setMittelpunkt(x, y + kantenLaengeViertelBlock);
 		viertelBlock3.setMittelpunkt(x, y + kantenLaengeViertelBlock * 2);
-		viertelBlock4.setMittelpunkt(x, y + kantenLaengeViertelBlock * 3);
+		viertelBlock4.setMittelpunkt(x + kantenLaengeViertelBlock, y + kantenLaengeViertelBlock * 2);
 
 		zeichneViertelBloecke(graphics);
 	}
-
 }

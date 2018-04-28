@@ -22,7 +22,17 @@ public abstract class Tetromino implements GeometrischeFigur {
 		super();
 	}
 
-	public abstract boolean faelltAuf(GeometrischeFigur gefallenerStein);
+	public boolean faelltAuf(GeometrischeFigur gefallenerStein) {
+
+		int hoechstesY = gefallenerStein.getHoechstesY();
+		int kanteLinksX = gefallenerStein.getKanteLinksX();
+		int kanteRechtsX = gefallenerStein.getKanteRechtsX();
+
+		if (getTiefstesY() >= hoechstesY && kanteLinksX < getKanteRechtsX() && kanteRechtsX > getKanteLinksX())
+			return true;
+
+		return false;
+	}
 
 	@Override
 	public void setDurchmesser(int d) {

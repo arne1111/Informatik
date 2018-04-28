@@ -2,9 +2,7 @@ package com.hoffrogge.tetris.model;
 
 public enum TetrominoTyp {
 
-	BLOCK, LANGER
-	// ,
-	// L,
+	BLOCK, LANGER, L,
 	// UMGEDREHTES_L,
 	// T,
 	// Z,

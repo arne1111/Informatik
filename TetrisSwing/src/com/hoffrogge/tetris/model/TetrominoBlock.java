@@ -2,8 +2,6 @@ package com.hoffrogge.tetris.model;
 
 import java.awt.Graphics;
 
-import com.hoffrogge.lehreinheit04.GeometrischeFigur;
-
 public class TetrominoBlock extends Tetromino {
 
 	private int kantenLaengeViertelBlock;
@@ -59,18 +57,5 @@ public class TetrominoBlock extends Tetromino {
 	@Override
 	public int getKanteRechtsX() {
 		return x + durchmesser;
-	}
-
-	@Override
-	public boolean faelltAuf(GeometrischeFigur gefallenerStein) {
-
-		int hoechstesY = gefallenerStein.getHoechstesY();
-		int kanteLinksX = gefallenerStein.getKanteLinksX();
-		int kanteRechtsX = gefallenerStein.getKanteRechtsX();
-
-		if (getTiefstesY() >= hoechstesY && kanteLinksX < getKanteRechtsX() && kanteRechtsX > getKanteLinksX())
-			return true;
-
-		return false;
 	}
 }

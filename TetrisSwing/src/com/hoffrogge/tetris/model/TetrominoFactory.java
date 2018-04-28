@@ -33,10 +33,13 @@ public class TetrominoFactory {
 		switch (typ) {
 
 		case BLOCK:
-			return new TetrominoBlock(x, y);
+			return new TetrominoBlock(Math.max(0, x - TetrisKonstanten.BLOCK_BREITE), y);
 
 		case LANGER:
 			return new TetrominoLanger(x, y);
+
+		case L:
+			return new TetrominoL(Math.max(0, x - TetrisKonstanten.BLOCK_BREITE), y);
 
 		default:
 			throw new IllegalStateException("TetrominoTyp " + typ + " ist nicht bekannt!");
