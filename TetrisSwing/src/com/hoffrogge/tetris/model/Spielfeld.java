@@ -5,7 +5,12 @@ import java.awt.Color;
 import java.awt.Font;
 import java.awt.Graphics;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.Map.Entry;
+import java.util.concurrent.CopyOnWriteArrayList;
 
 @SuppressWarnings("serial")
 public class Spielfeld extends Canvas {
@@ -15,7 +20,7 @@ public class Spielfeld extends Canvas {
 
 	public Spielfeld() {
 		/* Konstruktor */
-		gefalleneSteine = new ArrayList<>();
+		gefalleneSteine = new CopyOnWriteArrayList<>();
 	}
 
 	public Tetromino getFallenderSpielstein() {
@@ -27,6 +32,8 @@ public class Spielfeld extends Canvas {
 	}
 
 	public void aktualisieren() {
+
+		loescheVolleReihen();
 
 		if (fallenderSpielstein == null)
 			fallenderSpielstein = neuerZufaelligerSpielstein();
@@ -41,7 +48,6 @@ public class Spielfeld extends Canvas {
 
 				fallenderSpielstein = null;
 			}
-
 		}
 	}
 
@@ -67,7 +73,18 @@ public class Spielfeld extends Canvas {
 		}
 
 		getBufferStrategy().show();
+	}
 
+	public boolean istSpielfeldVoll() {
+
+		for (GeometrischeFigur gefallenerStein : gefalleneSteine) {
+
+			if (gefallenerStein.getHoechstesY() <= 0)
+				return true;
+
+		}
+
+		return false;
 	}
 
 	private static void zeichneSpielfeld(Graphics g) {
@@ -88,18 +105,6 @@ public class Spielfeld extends Canvas {
 		return TetrominoFactory.erstelleZufaelligenTetromino();
 	}
 
-	public boolean istSpielfeldVoll() {
-
-		for (GeometrischeFigur gefallenerStein : gefalleneSteine) {
-
-			if (gefallenerStein.getHoechstesY() <= 0)
-				return true;
-
-		}
-
-		return false;
-	}
-
 	private boolean hatFallenderSteinBodenErreicht() {
 		return fallenderSpielstein.getTiefstesY() == TetrisKonstanten.SPIELFELD_HOEHE;
 	}
@@ -114,5 +119,49 @@ public class Spielfeld extends Canvas {
 				return true;
 
 		return false;
+	}
+
+	@SuppressWarnings("boxing")
+	private void loescheVolleReihen() {
+
+		Collections.sort(gefalleneSteine);
+
+		Map<Integer, List<ViertelBlock>> bloeckeProReihe = new HashMap<>();
+
+		for (ViertelBlock block : gefalleneSteine) {
+
+			List<ViertelBlock> blockListe = bloeckeProReihe.get(block.getY());
+
+			if (blockListe == null)
+				blockListe = new ArrayList<>();
+
+			blockListe.add(block);
+
+			bloeckeProReihe.put(block.getY(), blockListe);
+		}
+
+		for (Entry<Integer, List<ViertelBlock>> reihe : bloeckeProReihe.entrySet()) {
+
+			List<ViertelBlock> blockListe = reihe.getValue();
+
+			if (blockListe.size() == TetrisKonstanten.SPIELFELD_BREITE / TetrisKonstanten.BLOCK_BREITE)
+				loescheReihe(blockListe);
+		}
+	}
+
+	private void loescheReihe(List<ViertelBlock> blockListe) {
+
+		int hoehe = 0;
+
+		for (ViertelBlock block : blockListe) {
+
+			block.setFuellFarbe(new Farbe(255, 60, 255));
+			gefalleneSteine.remove(block);
+			hoehe = block.getY();
+		}
+
+		for (ViertelBlock block : gefalleneSteine)
+			if (block.getY() < hoehe)
+				block.bewegeNachUnten();
 	}
 }

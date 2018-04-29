@@ -24,34 +24,28 @@ public class TetrominoFactory {
 
 	public static Tetromino erstelleTetromino(TetrominoTyp typ) {
 
-		Random r = new Random();
-
-		int multiplikator = TetrisKonstanten.SPIELFELD_BREITE / TetrisKonstanten.BLOCK_BREITE;
-		int x = (r.nextInt(multiplikator)) * TetrisKonstanten.BLOCK_BREITE;
-		int y = -TetrisKonstanten.BLOCK_BREITE * 4;
-
 		switch (typ) {
 
 		case BLOCK:
-			return new TetrominoBlock(Math.max(0, x - TetrisKonstanten.BLOCK_BREITE), y);
+			return new TetrominoBlock();
 
 		case LANGER:
-			return new TetrominoLanger(x, y);
+			return new TetrominoLanger();
 
 		case L:
-			return new TetrominoL(Math.max(0, x - TetrisKonstanten.BLOCK_BREITE), y);
+			return new TetrominoL();
 
 		case UMGEDREHTES_L:
-			return new TetrominoUmgedrehtesL(Math.max(0, x - TetrisKonstanten.BLOCK_BREITE), y);
+			return new TetrominoUmgedrehtesL();
 
 		case T:
-			return new TetrominoT(Math.max(0, x - TetrisKonstanten.BLOCK_BREITE), y);
+			return new TetrominoT();
 
 		case Z:
-			return new TetrominoZ(Math.max(0, x - TetrisKonstanten.BLOCK_BREITE), y);
+			return new TetrominoZ();
 
 		case UMGEDREHTES_Z:
-			return new TetrominoUmgedrehtesZ(Math.max(0, x - TetrisKonstanten.BLOCK_BREITE), y);
+			return new TetrominoUmgedrehtesZ();
 
 		default:
 			throw new IllegalStateException("TetrominoTyp " + typ + " ist nicht bekannt!");
