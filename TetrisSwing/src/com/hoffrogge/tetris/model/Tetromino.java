@@ -2,7 +2,6 @@ package com.hoffrogge.tetris.model;
 
 import java.awt.Graphics;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
 public abstract class Tetromino implements GeometrischeFigur {
@@ -12,10 +11,14 @@ public abstract class Tetromino implements GeometrischeFigur {
 	int y;
 	Farbe linienFarbe;
 
-	List<ViertelBlock> viertelBloecke = new ArrayList<>(4);
+	protected List<ViertelBlock> viertelBloecke = new ArrayList<>(4);
 
 	public Tetromino() {
 		super();
+	}
+
+	public List<ViertelBlock> getViertelBloecke() {
+		return viertelBloecke;
 	}
 
 	/* gegen den Uhrzeigersinn */
@@ -118,24 +121,16 @@ public abstract class Tetromino implements GeometrischeFigur {
 		return neuerPunkt;
 	}
 
-	public boolean faelltAuf(Tetromino gefallenerStein) {
+	public boolean faelltAuf(ViertelBlock block) {
 
 		if (viertelBloecke.isEmpty())
 			return false;
 
-		List<ViertelBlock> gefalleneViertelBloecke = gefallenerStein.getViertelBloecke();
-
 		for (ViertelBlock fallenderBlock : viertelBloecke)
-			for (ViertelBlock gefallenerBlock : gefalleneViertelBloecke)
-				if (fallenderBlock.getX() == gefallenerBlock.getX()
-						&& fallenderBlock.getTiefstesY() == gefallenerBlock.getHoechstesY())
-					return true;
+			if (fallenderBlock.getX() == block.getX() && fallenderBlock.getTiefstesY() == block.getHoechstesY())
+				return true;
 
 		return false;
-	}
-
-	private List<ViertelBlock> getViertelBloecke() {
-		return Collections.unmodifiableList(viertelBloecke);
 	}
 
 	@Override

@@ -11,7 +11,7 @@ import java.util.List;
 public class Spielfeld extends Canvas {
 
 	private transient Tetromino fallenderSpielstein;
-	private List<Tetromino> gefalleneSteine;
+	private List<ViertelBlock> gefalleneSteine;
 
 	public Spielfeld() {
 		/* Konstruktor */
@@ -37,7 +37,7 @@ public class Spielfeld extends Canvas {
 
 			if (hatFallenderSteinBodenErreicht() || faelltFallenderSteinAufAnderenStein()) {
 
-				gefalleneSteine.add(fallenderSpielstein);
+				gefalleneSteine.addAll(fallenderSpielstein.getViertelBloecke());
 
 				fallenderSpielstein = null;
 			}
@@ -109,8 +109,8 @@ public class Spielfeld extends Canvas {
 		if (gefalleneSteine.isEmpty())
 			return false;
 
-		for (Tetromino gefallenerStein : gefalleneSteine)
-			if (fallenderSpielstein.faelltAuf(gefallenerStein))
+		for (ViertelBlock block : gefalleneSteine)
+			if (fallenderSpielstein.faelltAuf(block))
 				return true;
 
 		return false;
