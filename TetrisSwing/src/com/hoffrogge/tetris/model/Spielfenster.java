@@ -24,6 +24,8 @@ public class Spielfenster extends JFrame {
 
 		add(spielfeld);
 
+		addKeyListener(new TetrisKeyListener(spielfeld));
+
 		setVisible(true);
 
 		spielfeld.createBufferStrategy(2);

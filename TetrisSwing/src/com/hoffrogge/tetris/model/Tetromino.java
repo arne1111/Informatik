@@ -134,14 +134,47 @@ public abstract class Tetromino implements GeometrischeFigur {
 		}
 	}
 
-	public void falle() {
+	public void bewegeNachLinks() {
 
 		if (viertelBloecke.isEmpty())
 			return;
 
+		if (getKanteLinksX() == 0)
+			return;
+
 		for (ViertelBlock block : viertelBloecke) {
 
-			block.setY(block.getY() + TetrisKonstanten.TETROMINO_FALL_HOEHE);
+			int neuesBlockX = block.getX() - TetrisKonstanten.BLOCK_BREITE;
+
+			if (neuesBlockX >= 0)
+				block.setX(neuesBlockX);
 		}
 	}
+
+	public void bewegeNachRechts() {
+
+		if (viertelBloecke.isEmpty())
+			return;
+
+		if (getKanteRechtsX() == TetrisKonstanten.SPIELFELD_BREITE)
+			return;
+
+		for (ViertelBlock block : viertelBloecke) {
+
+			int neuesBlockX = block.getX() + TetrisKonstanten.BLOCK_BREITE;
+
+			if (neuesBlockX <= TetrisKonstanten.SPIELFELD_BREITE)
+				block.setX(neuesBlockX);
+		}
+	}
+
+	public void bewegeNachUnten() {
+
+		if (viertelBloecke.isEmpty())
+			return;
+
+		for (ViertelBlock block : viertelBloecke)
+			block.setY(block.getY() + TetrisKonstanten.TETROMINO_FALL_HOEHE);
+	}
+
 }

@@ -18,6 +18,10 @@ public class Spielfeld extends Canvas {
 		gefalleneSteine = new ArrayList<>();
 	}
 
+	public Tetromino getFallenderSpielstein() {
+		return fallenderSpielstein;
+	}
+
 	public void spielerEingabenVerarbeiten() {
 		/* Hier passiert noch nichts. */
 	}
@@ -29,7 +33,7 @@ public class Spielfeld extends Canvas {
 
 		if (fallenderSpielstein != null) {
 
-			fallenderSpielstein.falle();
+			fallenderSpielstein.bewegeNachUnten();
 
 			if (hatFallenderSteinBodenErreicht() || faelltFallenderSteinAufAnderenStein()) {
 
