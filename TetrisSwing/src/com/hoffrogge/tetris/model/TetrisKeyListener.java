@@ -41,6 +41,10 @@ public class TetrisKeyListener implements KeyListener {
 			spielfeld.aktualisieren();
 			break;
 
+		case KeyEvent.VK_Q:
+			fallenderSpielstein.rotiereNachLinks();
+			break;
+
 		default:
 			break;
 		}

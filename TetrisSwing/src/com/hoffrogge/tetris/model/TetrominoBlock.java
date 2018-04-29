@@ -23,4 +23,8 @@ public class TetrominoBlock extends Tetromino {
 
 	}
 
+	@Override
+	public void rotiereNachLinks() {
+		/* Ein Block muss nicht rotiert werden */
+	}
 }

@@ -21,5 +21,4 @@ public class TetrominoL extends Tetromino {
 		viertelBloecke.add(new ViertelBlock(x, y + kantenLaengeViertelBlock * 2));
 		viertelBloecke.add(new ViertelBlock(x + kantenLaengeViertelBlock, y + kantenLaengeViertelBlock * 2));
 	}
-
 }

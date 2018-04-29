@@ -22,4 +22,38 @@ public class TetrominoLanger extends Tetromino {
 		viertelBloecke.add(new ViertelBlock(x, y + kantenLaengeViertelBlock * 3));
 	}
 
+	@Override
+	public void rotiereNachLinks() {
+
+		if (viertelBloecke.size() != 4)
+			throw new IllegalStateException("Der Tetromino hat keine vier Bloecke!");
+
+		ViertelBlock ersterBlock = viertelBloecke.get(0);
+		ViertelBlock dritterBlock = viertelBloecke.get(2);
+		ViertelBlock vierterBlock = viertelBloecke.get(3);
+
+		boolean senkrecht = ersterBlock.getX() == vierterBlock.getX();
+
+		if (senkrecht) {
+
+			ersterBlock.setX(ersterBlock.getX() - TetrisKonstanten.BLOCK_BREITE);
+			ersterBlock.setY(ersterBlock.getY() + TetrisKonstanten.BLOCK_BREITE);
+
+			dritterBlock.setX(dritterBlock.getX() + TetrisKonstanten.BLOCK_BREITE);
+			dritterBlock.setY(dritterBlock.getY() - TetrisKonstanten.BLOCK_BREITE);
+
+			vierterBlock.setX(vierterBlock.getX() + TetrisKonstanten.BLOCK_BREITE * 2);
+			vierterBlock.setY(vierterBlock.getY() - TetrisKonstanten.BLOCK_BREITE * 2);
+		} else {
+
+			ersterBlock.setX(ersterBlock.getX() + TetrisKonstanten.BLOCK_BREITE);
+			ersterBlock.setY(ersterBlock.getY() - TetrisKonstanten.BLOCK_BREITE);
+
+			dritterBlock.setX(dritterBlock.getX() - TetrisKonstanten.BLOCK_BREITE);
+			dritterBlock.setY(dritterBlock.getY() + TetrisKonstanten.BLOCK_BREITE);
+
+			vierterBlock.setX(vierterBlock.getX() - TetrisKonstanten.BLOCK_BREITE * 2);
+			vierterBlock.setY(vierterBlock.getY() + TetrisKonstanten.BLOCK_BREITE * 2);
+		}
+	}
 }
