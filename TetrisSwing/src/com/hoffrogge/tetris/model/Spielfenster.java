@@ -17,6 +17,7 @@ public class Spielfenster extends JFrame {
 	private JLabel punkteWertLabel;
 
 	private TetrisKeyListener tetrisKeyListener;
+	private JLabel highscoreWertLabel;
 
 	public Spielfenster() {
 
@@ -56,16 +57,23 @@ public class Spielfenster extends JFrame {
 		JLabel reihenLabel = new JLabel("Reihen");
 		reihenLabel.setFont(font);
 		reihenLabel.setBounds(TetrisKonstanten.LABEL_LINKS_POS_X,
-				TetrisKonstanten.LABEL_LINKS_POS_Y + TetrisKonstanten.BLOCK_BREITE * 3, 100, 25);
+				TetrisKonstanten.LABEL_LINKS_POS_Y + TetrisKonstanten.BLOCK_BREITE * 2, 100, 25);
 		reihenLabel.setForeground(TetrisKonstanten.TEXT.konvertiereZuColor());
 		getContentPane().add(reihenLabel);
 
 		JLabel punkteLabel = new JLabel("Punkte");
 		punkteLabel.setFont(font);
 		punkteLabel.setBounds(TetrisKonstanten.LABEL_LINKS_POS_X,
-				TetrisKonstanten.LABEL_LINKS_POS_Y + TetrisKonstanten.BLOCK_BREITE * 6, 100, 25);
+				TetrisKonstanten.LABEL_LINKS_POS_Y + TetrisKonstanten.BLOCK_BREITE * 4, 100, 25);
 		punkteLabel.setForeground(TetrisKonstanten.TEXT.konvertiereZuColor());
 		getContentPane().add(punkteLabel);
+
+		JLabel lblHighscore = new JLabel("Highscore");
+		lblHighscore.setForeground(TetrisKonstanten.TEXT.konvertiereZuColor());
+		lblHighscore.setFont(font);
+		lblHighscore.setBounds(TetrisKonstanten.LABEL_LINKS_POS_X,
+				TetrisKonstanten.LABEL_LINKS_POS_Y + TetrisKonstanten.BLOCK_BREITE * 6, 100, 25);
+		getContentPane().add(lblHighscore);
 
 		levelWertLabel = new JLabel("New label");
 		levelWertLabel.setHorizontalAlignment(SwingConstants.RIGHT);
@@ -78,7 +86,7 @@ public class Spielfenster extends JFrame {
 		reihenWertLabel.setHorizontalAlignment(SwingConstants.RIGHT);
 		reihenWertLabel.setFont(font);
 		reihenWertLabel.setBounds(TetrisKonstanten.LABEL_RECHTS_POS_X,
-				TetrisKonstanten.LABEL_RECHTS_POS_Y + TetrisKonstanten.BLOCK_BREITE * 3, 100, 25);
+				TetrisKonstanten.LABEL_RECHTS_POS_Y + TetrisKonstanten.BLOCK_BREITE * 2, 100, 25);
 		reihenWertLabel.setForeground(TetrisKonstanten.TEXT.konvertiereZuColor());
 		getContentPane().add(reihenWertLabel);
 
@@ -86,9 +94,17 @@ public class Spielfenster extends JFrame {
 		punkteWertLabel.setHorizontalAlignment(SwingConstants.RIGHT);
 		punkteWertLabel.setFont(font);
 		punkteWertLabel.setBounds(TetrisKonstanten.LABEL_RECHTS_POS_X,
-				TetrisKonstanten.LABEL_RECHTS_POS_Y + TetrisKonstanten.BLOCK_BREITE * 6, 100, 25);
+				TetrisKonstanten.LABEL_RECHTS_POS_Y + TetrisKonstanten.BLOCK_BREITE * 4, 100, 25);
 		punkteWertLabel.setForeground(TetrisKonstanten.TEXT.konvertiereZuColor());
 		getContentPane().add(punkteWertLabel);
+
+		highscoreWertLabel = new JLabel("New label");
+		highscoreWertLabel.setHorizontalAlignment(SwingConstants.RIGHT);
+		highscoreWertLabel.setForeground(TetrisKonstanten.TEXT.konvertiereZuColor());
+		highscoreWertLabel.setFont(font);
+		highscoreWertLabel.setBounds(TetrisKonstanten.LABEL_RECHTS_POS_X,
+				TetrisKonstanten.LABEL_RECHTS_POS_Y + TetrisKonstanten.BLOCK_BREITE * 6, 100, 25);
+		getContentPane().add(highscoreWertLabel);
 
 		Font steuerungFont = new Font("Arial", Font.PLAIN, 12);
 		JLabel lblPauseMitP = new JLabel("Pause mit P");
@@ -140,5 +156,9 @@ public class Spielfenster extends JFrame {
 
 	public TetrisKeyListener getTetrisKeyListener() {
 		return tetrisKeyListener;
+	}
+
+	public JLabel getHighscoreLabel() {
+		return highscoreWertLabel;
 	}
 }

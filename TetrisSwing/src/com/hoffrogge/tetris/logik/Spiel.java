@@ -20,9 +20,11 @@ public class Spiel implements Runnable {
 	private boolean spielLaeuft;
 	private Thread spielThread;
 	private Thread soundThread;
+
 	private JLabel punkteWertLabel;
 	private JLabel levelWertLabel;
 	private JLabel reihenWertLabel;
+	private JLabel highscoreLabel;
 
 	private TetrisKeyListener tetrisKeyListener;
 
@@ -45,6 +47,7 @@ public class Spiel implements Runnable {
 		punkteWertLabel = spielfenster.getPunkteWertLabel();
 		levelWertLabel = spielfenster.getLevelWertLabel();
 		reihenWertLabel = spielfenster.getReihenWertLabel();
+		highscoreLabel = spielfenster.getHighscoreLabel();
 
 		spielLaeuft = true;
 	}
@@ -140,6 +143,9 @@ public class Spiel implements Runnable {
 		levelWertLabel.setText(String.valueOf(level));
 		punkteWertLabel.setText(String.valueOf(punkte));
 		reihenWertLabel.setText(String.valueOf(reihen));
+
+		int highscore = Math.max(punkte, 0);
+		highscoreLabel.setText(String.valueOf(highscore));
 	}
 
 	public void togglePause() {
