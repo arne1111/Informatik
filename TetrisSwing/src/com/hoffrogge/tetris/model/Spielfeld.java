@@ -89,7 +89,6 @@ public class Spielfeld extends Canvas {
 
 			if (gefallenerStein.getHoechstesY() <= 0)
 				return true;
-
 		}
 
 		return false;
