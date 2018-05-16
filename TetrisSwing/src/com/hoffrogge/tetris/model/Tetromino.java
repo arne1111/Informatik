@@ -13,10 +13,6 @@ public abstract class Tetromino implements GeometrischeFigur {
 
 	protected List<ViertelBlock> viertelBloecke = new ArrayList<>(4);
 
-	public Tetromino() {
-		super();
-	}
-
 	public List<ViertelBlock> getViertelBloecke() {
 		return viertelBloecke;
 	}
