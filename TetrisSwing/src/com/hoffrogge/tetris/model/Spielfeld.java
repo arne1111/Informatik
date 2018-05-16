@@ -10,12 +10,15 @@ import java.util.Map;
 import java.util.Map.Entry;
 import java.util.concurrent.CopyOnWriteArrayList;
 
+import com.hoffrogge.tetris.logik.Spiel;
+
 @SuppressWarnings("serial")
 public class Spielfeld extends Canvas {
 
 	private transient Tetromino fallenderSpielstein;
 	private TetrominoTyp naechsterSpielsteinTyp;
 	private List<ViertelBlock> gefalleneSteine;
+	private Spiel spiel;
 
 	public Spielfeld() {
 		/* Konstruktor */
@@ -24,6 +27,10 @@ public class Spielfeld extends Canvas {
 
 	public Tetromino getFallenderSpielstein() {
 		return fallenderSpielstein;
+	}
+
+	public void setSpiel(Spiel spiel) {
+		this.spiel = spiel;
 	}
 
 	public void spielerEingabenVerarbeiten() {
@@ -46,6 +53,8 @@ public class Spielfeld extends Canvas {
 				gefalleneSteine.addAll(fallenderSpielstein.getViertelBloecke());
 
 				fallenderSpielstein = null;
+
+				spiel.erhoehePunkte();
 			}
 		}
 	}
@@ -168,5 +177,7 @@ public class Spielfeld extends Canvas {
 		for (ViertelBlock block : gefalleneSteine)
 			if (block.getY() < hoehe)
 				block.bewegeNachUnten();
+
+		spiel.erhoeheReihen();
 	}
 }
