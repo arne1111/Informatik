@@ -18,7 +18,6 @@ public class Spielfeld extends Canvas {
 	private transient Tetromino fallenderSpielstein;
 	private TetrominoTyp naechsterSpielsteinTyp;
 	private List<ViertelBlock> gefalleneSteine;
-	private Vorschau vorschauCanvas;
 
 	public Spielfeld() {
 		/* Konstruktor */
@@ -179,9 +178,4 @@ public class Spielfeld extends Canvas {
 			if (block.getY() < hoehe)
 				block.bewegeNachUnten();
 	}
-
-	public void addVorschauCanvas(Vorschau vorschauCanvas) {
-		this.vorschauCanvas = vorschauCanvas;
-	}
-
 }

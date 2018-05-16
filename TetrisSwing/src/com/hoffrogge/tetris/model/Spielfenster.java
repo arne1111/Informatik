@@ -42,8 +42,6 @@ public class Spielfenster extends JFrame {
 		vorschau.setBounds(416, 42, TetrisKonstanten.BLOCK_BREITE * 5, TetrisKonstanten.BLOCK_BREITE * 6);
 		getContentPane().add(vorschau);
 
-		spielfeld.addVorschauCanvas(vorschau);
-
 		setVisible(true);
 
 		spielfeld.createBufferStrategy(2);
@@ -57,5 +55,4 @@ public class Spielfenster extends JFrame {
 	public Vorschau getVorschau() {
 		return vorschau;
 	}
-
 }
