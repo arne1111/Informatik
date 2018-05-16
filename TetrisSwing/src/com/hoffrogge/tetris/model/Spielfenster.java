@@ -1,5 +1,6 @@
 package com.hoffrogge.tetris.model;
 
+import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Font;
 
@@ -17,6 +18,9 @@ public class Spielfenster extends JFrame {
 	private JLabel punkteWertLabel;
 
 	private TetrisKeyListener tetrisKeyListener;
+	private JLabel lblPauseMitP;
+	private JLabel lblDrehenMitQ;
+	private JLabel lblBewegenMitPfeiltasten;
 
 	public Spielfenster() {
 
@@ -49,42 +53,63 @@ public class Spielfenster extends JFrame {
 
 		JLabel levelLabel = new JLabel("Level");
 		levelLabel.setFont(font);
-		levelLabel.setBounds(406, 419, 100, 25);
+		levelLabel.setBounds(411, 287, 100, 25);
 		levelLabel.setForeground(TetrisKonstanten.TEXT.konvertiereZuColor());
 		getContentPane().add(levelLabel);
 
 		JLabel reihenLabel = new JLabel("Reihen");
 		reihenLabel.setFont(font);
-		reihenLabel.setBounds(406, 531, 100, 25);
+		reihenLabel.setBounds(411, 399, 100, 25);
 		reihenLabel.setForeground(TetrisKonstanten.TEXT.konvertiereZuColor());
 		getContentPane().add(reihenLabel);
 
 		JLabel punkteLabel = new JLabel("Punkte");
 		punkteLabel.setFont(font);
-		punkteLabel.setBounds(406, 640, 100, 25);
+		punkteLabel.setBounds(411, 508, 100, 25);
 		punkteLabel.setForeground(TetrisKonstanten.TEXT.konvertiereZuColor());
 		getContentPane().add(punkteLabel);
 
 		levelWertLabel = new JLabel("New label");
 		levelWertLabel.setHorizontalAlignment(SwingConstants.RIGHT);
 		levelWertLabel.setFont(font);
-		levelWertLabel.setBounds(504, 455, 100, 25);
+		levelWertLabel.setBounds(510, 323, 100, 25);
 		levelWertLabel.setForeground(TetrisKonstanten.TEXT.konvertiereZuColor());
 		getContentPane().add(levelWertLabel);
 
 		reihenWertLabel = new JLabel("New label");
 		reihenWertLabel.setHorizontalAlignment(SwingConstants.RIGHT);
 		reihenWertLabel.setFont(font);
-		reihenWertLabel.setBounds(504, 567, 100, 25);
+		reihenWertLabel.setBounds(510, 435, 100, 25);
 		reihenWertLabel.setForeground(TetrisKonstanten.TEXT.konvertiereZuColor());
 		getContentPane().add(reihenWertLabel);
 
 		punkteWertLabel = new JLabel("New label");
 		punkteWertLabel.setHorizontalAlignment(SwingConstants.RIGHT);
 		punkteWertLabel.setFont(font);
-		punkteWertLabel.setBounds(504, 676, 100, 25);
+		punkteWertLabel.setBounds(510, 545, 100, 25);
 		punkteWertLabel.setForeground(TetrisKonstanten.TEXT.konvertiereZuColor());
 		getContentPane().add(punkteWertLabel);
+
+		lblPauseMitP = new JLabel("Pause mit P");
+		lblPauseMitP.setHorizontalAlignment(SwingConstants.RIGHT);
+		lblPauseMitP.setForeground(new Color(55, 63, 81));
+		lblPauseMitP.setFont(new Font("Arial", Font.PLAIN, 12));
+		lblPauseMitP.setBounds(460, 780, 150, 25);
+		getContentPane().add(lblPauseMitP);
+
+		lblDrehenMitQ = new JLabel("Drehen mit Q");
+		lblDrehenMitQ.setHorizontalAlignment(SwingConstants.RIGHT);
+		lblDrehenMitQ.setForeground(new Color(55, 63, 81));
+		lblDrehenMitQ.setFont(new Font("Arial", Font.PLAIN, 12));
+		lblDrehenMitQ.setBounds(460, 744, 150, 25);
+		getContentPane().add(lblDrehenMitQ);
+
+		lblBewegenMitPfeiltasten = new JLabel("Bewegen mit Pfeiltasten");
+		lblBewegenMitPfeiltasten.setHorizontalAlignment(SwingConstants.RIGHT);
+		lblBewegenMitPfeiltasten.setForeground(new Color(55, 63, 81));
+		lblBewegenMitPfeiltasten.setFont(new Font("Arial", Font.PLAIN, 12));
+		lblBewegenMitPfeiltasten.setBounds(450, 708, 160, 25);
+		getContentPane().add(lblBewegenMitPfeiltasten);
 
 		setVisible(true);
 
