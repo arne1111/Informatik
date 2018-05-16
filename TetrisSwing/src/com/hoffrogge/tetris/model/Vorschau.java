@@ -8,7 +8,8 @@ import java.awt.Graphics;
 @SuppressWarnings("serial")
 public class Vorschau extends Canvas {
 
-	private Tetromino naechsterSpielstein;
+	private TetrominoTyp naechsterSpielsteinTyp;
+	private static final Farbe FUELL_FARBE = new Farbe(80, 90, 80);
 
 	@Override
 	public void paint(Graphics g) {
@@ -19,8 +20,8 @@ public class Vorschau extends Canvas {
 		g.drawString("Tetris Infofeld", 10, 20);
 	}
 
-	public void aktualisieren(Tetromino naechsterSpielstein) {
-		this.naechsterSpielstein = naechsterSpielstein;
+	public void aktualisieren(TetrominoTyp tetrominoTyp) {
+		this.naechsterSpielsteinTyp = tetrominoTyp;
 	}
 
 	public void darstellen() {
@@ -33,8 +34,56 @@ public class Vorschau extends Canvas {
 
 			zeichneVorschauFeld(g);
 
-			if (naechsterSpielstein != null)
-				naechsterSpielstein.zeichnen(g);
+			if (naechsterSpielsteinTyp == null)
+				return;
+
+			int xKoordinate = 0;
+			int yKoordinate = 0;
+
+			switch (naechsterSpielsteinTyp) {
+
+			case BLOCK:
+				xKoordinate = (int) (TetrisKonstanten.BLOCK_BREITE * 1.5);
+				yKoordinate = TetrisKonstanten.BLOCK_BREITE * 2;
+				break;
+
+			case L:
+			case UMGEDREHTES_Z:
+				xKoordinate = (int) (TetrisKonstanten.BLOCK_BREITE * 1.5);
+				yKoordinate = (int) (TetrisKonstanten.BLOCK_BREITE * 1.5);
+				break;
+
+			case UMGEDREHTES_L:
+				xKoordinate = (int) (TetrisKonstanten.BLOCK_BREITE * 2.5);
+				yKoordinate = TetrisKonstanten.BLOCK_BREITE;
+				break;
+
+			case LANGER:
+				xKoordinate = TetrisKonstanten.BLOCK_BREITE * 2;
+				yKoordinate = TetrisKonstanten.BLOCK_BREITE;
+				break;
+
+			case Z:
+				xKoordinate = (int) (TetrisKonstanten.BLOCK_BREITE * 2.5);
+				yKoordinate = (int) (TetrisKonstanten.BLOCK_BREITE * 1.5);
+				break;
+
+			case T:
+				xKoordinate = TetrisKonstanten.BLOCK_BREITE * 2;
+				yKoordinate = TetrisKonstanten.BLOCK_BREITE * 2;
+				break;
+
+			default:
+				throw new IllegalStateException("TetrominoTyp " + naechsterSpielsteinTyp + " ist nicht bekannt!");
+			}
+
+			Tetromino naechsterSpielstein = TetrominoFactory.erstelleTetromino(naechsterSpielsteinTyp, xKoordinate,
+					yKoordinate);
+
+			for (ViertelBlock block : naechsterSpielstein.getViertelBloecke())
+				block.setFuellFarbe(FUELL_FARBE);
+
+			naechsterSpielstein.zeichnen(g);
 
 		} finally {
 			if (g != null)
@@ -48,13 +97,6 @@ public class Vorschau extends Canvas {
 
 		/* Hintergrund des Feldes */
 		g.setColor(Color.GRAY);
-		g.fillRect(0, 0, TetrisKonstanten.BLOCK_BREITE * 4, TetrisKonstanten.BLOCK_BREITE * 4);
-
-		/* Text auf dem Spielfeld */
-		Font f = new Font("Helvetica", Font.PLAIN, 20);
-
-		g.setFont(f);
-		g.setColor(Color.WHITE);
-		g.drawString("Vorschau", 10, 20);
+		g.fillRect(0, 0, TetrisKonstanten.BLOCK_BREITE * 5, TetrisKonstanten.BLOCK_BREITE * 6);
 	}
 }

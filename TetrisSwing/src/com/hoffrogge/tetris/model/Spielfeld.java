@@ -16,7 +16,7 @@ import java.util.concurrent.CopyOnWriteArrayList;
 public class Spielfeld extends Canvas {
 
 	private transient Tetromino fallenderSpielstein;
-	private transient Tetromino naechsterSpielstein;
+	private TetrominoTyp naechsterSpielsteinTyp;
 	private List<ViertelBlock> gefalleneSteine;
 	private Vorschau vorschauCanvas;
 
@@ -105,8 +105,19 @@ public class Spielfeld extends Canvas {
 
 	private Tetromino neuerZufaelligerSpielstein() {
 
-		naechsterSpielstein = TetrominoFactory.erstelleZufaelligenTetromino();
-		return naechsterSpielstein;
+		/* bei Spielstart gibt es noch keinen naechsten Stein */
+		if (naechsterSpielsteinTyp == null)
+			naechsterSpielsteinTyp = TetrominoFactory.erstelleZufaelligenTetrominoTyp();
+
+		Tetromino tetromino = TetrominoFactory.erstelleTetromino(naechsterSpielsteinTyp);
+
+		naechsterSpielsteinTyp = TetrominoFactory.erstelleZufaelligenTetrominoTyp();
+
+		return tetromino;
+	}
+
+	public TetrominoTyp getNaechsterSpielsteinTyp() {
+		return naechsterSpielsteinTyp;
 	}
 
 	private boolean hatFallenderSteinBodenErreicht() {
@@ -173,7 +184,4 @@ public class Spielfeld extends Canvas {
 		this.vorschauCanvas = vorschauCanvas;
 	}
 
-	public Tetromino getNaechsterSpielstein() {
-		return naechsterSpielstein;
-	}
 }

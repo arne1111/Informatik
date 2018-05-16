@@ -18,8 +18,7 @@ public class Spielfenster extends JFrame {
 		setTitle("Hoffrogge Tetris Klon");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
-		setSize(new Dimension((int) (TetrisKonstanten.SPIELFELD_BREITE * 1.5),
-				(int) (TetrisKonstanten.SPIELFELD_HOEHE * 1.03)));
+		setSize(new Dimension(637, 824));
 
 		setResizable(false);
 		setLocationRelativeTo(null);
@@ -40,7 +39,7 @@ public class Spielfenster extends JFrame {
 		vorschau = new Vorschau();
 		vorschau.setBackground(Color.WHITE);
 		vorschau.setForeground(Color.WHITE);
-		vorschau.setBounds(416, 42, TetrisKonstanten.BLOCK_BREITE * 4, TetrisKonstanten.BLOCK_BREITE * 4);
+		vorschau.setBounds(416, 42, TetrisKonstanten.BLOCK_BREITE * 5, TetrisKonstanten.BLOCK_BREITE * 6);
 		getContentPane().add(vorschau);
 
 		spielfeld.addVorschauCanvas(vorschau);

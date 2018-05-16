@@ -32,7 +32,7 @@ public class Spiel implements Runnable {
 			spielfeld.aktualisieren();
 			spielfeld.darstellen();
 
-			vorschau.aktualisieren(spielfeld.getNaechsterSpielstein());
+			vorschau.aktualisieren(spielfeld.getNaechsterSpielsteinTyp());
 			vorschau.darstellen();
 
 			if (spielfeld.istSpielfeldVoll())
