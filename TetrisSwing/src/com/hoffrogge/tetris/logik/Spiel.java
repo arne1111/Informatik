@@ -27,12 +27,16 @@ public class Spiel implements Runnable {
 	private int level = 1;
 	private int punkte = 0;
 	private int reihen = 0;
+	private boolean isPause;
 
 	public Spiel(Spielfenster spielfenster) {
 
 		spielfeld = spielfenster.getSpielfeld();
 		vorschau = spielfenster.getVorschau();
 		tetrisKeyListener = spielfenster.getTetrisKeyListener();
+
+		/* Das koennte man mit einem Oberserver viel schoener loesen */
+		tetrisKeyListener.setSpiel(this);
 
 		spielfeld.setSpiel(this);
 
@@ -51,7 +55,9 @@ public class Spiel implements Runnable {
 			punkteLevelReihenAktualisieren();
 
 			spielfeld.spielerEingabenVerarbeiten();
-			spielfeld.aktualisieren();
+
+			if (!isPause())
+				spielfeld.aktualisieren();
 
 			vorschau.aktualisieren(spielfeld.getNaechsterSpielsteinTyp());
 
@@ -121,5 +127,13 @@ public class Spiel implements Runnable {
 		levelWertLabel.setText(String.valueOf(level));
 		punkteWertLabel.setText(String.valueOf(punkte));
 		reihenWertLabel.setText(String.valueOf(reihen));
+	}
+
+	public void togglePause() {
+		isPause = !isPause;
+	}
+
+	public boolean isPause() {
+		return isPause;
 	}
 }

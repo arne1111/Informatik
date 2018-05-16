@@ -1,6 +1,7 @@
 package com.hoffrogge.tetris.model;
 
 import java.awt.Canvas;
+import java.awt.Font;
 import java.awt.Graphics;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -69,11 +70,16 @@ public class Spielfeld extends Canvas {
 
 			zeichneSpielfeld(g);
 
-			if (fallenderSpielstein != null)
-				fallenderSpielstein.zeichnen(g);
+			if (!spiel.isPause()) {
 
-			for (GeometrischeFigur gefallenerStein : gefalleneSteine)
-				gefallenerStein.zeichnen(g);
+				if (fallenderSpielstein != null)
+					fallenderSpielstein.zeichnen(g);
+
+				for (GeometrischeFigur gefallenerStein : gefalleneSteine)
+					gefallenerStein.zeichnen(g);
+			} else {
+				zeichnePauseSchriftzug(g);
+			}
 
 		} finally {
 			if (g != null)
@@ -99,6 +105,17 @@ public class Spielfeld extends Canvas {
 		/* Hintergrund des Spielfeldes */
 		g.setColor(TetrisKonstanten.HINTERGRUND.konvertiereZuColor());
 		g.fillRect(0, 0, TetrisKonstanten.SPIELFELD_BREITE, TetrisKonstanten.SPIELFELD_HOEHE);
+	}
+
+	private void zeichnePauseSchriftzug(Graphics g) {
+
+		Font font = new Font("Arial Black", Font.BOLD, TetrisKonstanten.BLOCK_BREITE);
+
+		g.setColor(TetrisKonstanten.AKZENT.konvertiereZuColor());
+		g.setFont(font);
+
+		g.drawString("Pause", TetrisKonstanten.SPIELFELD_BREITE / 2 - TetrisKonstanten.BLOCK_BREITE * 2,
+				TetrisKonstanten.SPIELFELD_HOEHE / 2);
 	}
 
 	private Tetromino neuerZufaelligerSpielstein() {
