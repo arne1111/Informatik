@@ -9,7 +9,7 @@ public class Main {
 
 		Spielfenster spielfenster = new Spielfenster();
 
-		Spiel spiel = new Spiel(spielfenster.getSpielfeld());
+		Spiel spiel = new Spiel(spielfenster.getSpielfeld(), spielfenster.getVorschau());
 
 		spiel.starteSpiel();
 	}

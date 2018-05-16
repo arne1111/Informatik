@@ -16,7 +16,9 @@ import java.util.concurrent.CopyOnWriteArrayList;
 public class Spielfeld extends Canvas {
 
 	private transient Tetromino fallenderSpielstein;
+	private transient Tetromino naechsterSpielstein;
 	private List<ViertelBlock> gefalleneSteine;
+	private Vorschau vorschauCanvas;
 
 	public Spielfeld() {
 		/* Konstruktor */
@@ -101,8 +103,10 @@ public class Spielfeld extends Canvas {
 		g.drawString("Tetris Spielfeld", 10, 20);
 	}
 
-	private static Tetromino neuerZufaelligerSpielstein() {
-		return TetrominoFactory.erstelleZufaelligenTetromino();
+	private Tetromino neuerZufaelligerSpielstein() {
+
+		naechsterSpielstein = TetrominoFactory.erstelleZufaelligenTetromino();
+		return naechsterSpielstein;
 	}
 
 	private boolean hatFallenderSteinBodenErreicht() {
@@ -163,5 +167,13 @@ public class Spielfeld extends Canvas {
 		for (ViertelBlock block : gefalleneSteine)
 			if (block.getY() < hoehe)
 				block.bewegeNachUnten();
+	}
+
+	public void addVorschauCanvas(Vorschau vorschauCanvas) {
+		this.vorschauCanvas = vorschauCanvas;
+	}
+
+	public Tetromino getNaechsterSpielstein() {
+		return naechsterSpielstein;
 	}
 }
