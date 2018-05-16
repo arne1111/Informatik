@@ -96,7 +96,7 @@ public class Spiel implements Runnable {
 		}
 	}
 
-	public void erhoehePunkteFreierFall() {
+	public void erhoehePunkte() {
 
 		if (tetrisKeyListener.isBeschleunigterFall())
 			punkte += level * 3 + 21;
@@ -112,7 +112,7 @@ public class Spiel implements Runnable {
 
 	private void pruefeUndSetzeLevel() {
 
-		if (punkte / level >= 5)
+		if (reihen / level >= 10)
 			level++;
 	}
 

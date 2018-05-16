@@ -54,7 +54,7 @@ public class Spielfeld extends Canvas {
 
 				fallenderSpielstein = null;
 
-				spiel.erhoehePunkteFreierFall();
+				spiel.erhoehePunkte();
 			}
 		}
 	}
