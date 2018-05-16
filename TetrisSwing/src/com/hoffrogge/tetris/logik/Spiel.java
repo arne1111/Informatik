@@ -91,8 +91,11 @@ public class Spiel implements Runnable {
 		spielThread = new Thread(this);
 		spielThread.start();
 
-		soundThread = new Thread(new TetrisMusikSpieler());
-		soundThread.start();
+		if (TetrisKonstanten.MUSIK_AN) {
+
+			soundThread = new Thread(new TetrisMusikSpieler());
+			soundThread.start();
+		}
 	}
 
 	public void beendeSpiel() {
@@ -102,7 +105,9 @@ public class Spiel implements Runnable {
 		try {
 
 			spielThread.join();
-			soundThread.join();
+
+			if (TetrisKonstanten.MUSIK_AN)
+				soundThread.join();
 
 		} catch (InterruptedException e) {
 			Logger.getGlobal().log(Level.OFF, e.getMessage(), e);

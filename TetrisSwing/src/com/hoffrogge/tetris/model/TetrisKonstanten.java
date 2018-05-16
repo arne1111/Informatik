@@ -5,6 +5,8 @@ public class TetrisKonstanten {
 	private TetrisKonstanten() {
 	}
 
+	public static final boolean MUSIK_AN = false;
+
 	public static final int BLOCK_BREITE = 40;
 
 	public static final int ABSTAND = BLOCK_BREITE / 8;
