@@ -6,6 +6,7 @@ import java.awt.event.KeyListener;
 public class TetrisKeyListener implements KeyListener {
 
 	private Spielfeld spielfeld;
+	private boolean isBeschleunigterFall;
 
 	public TetrisKeyListener(Spielfeld spielfeld) {
 
@@ -38,6 +39,7 @@ public class TetrisKeyListener implements KeyListener {
 			break;
 
 		case KeyEvent.VK_DOWN:
+			isBeschleunigterFall = true;
 			spielfeld.aktualisieren();
 			break;
 
@@ -54,6 +56,12 @@ public class TetrisKeyListener implements KeyListener {
 
 	@Override
 	public void keyReleased(KeyEvent e) {
-		/* nichts zu tun */
+
+		if (KeyEvent.VK_DOWN == e.getKeyCode())
+			isBeschleunigterFall = false;
+	}
+
+	public boolean isBeschleunigterFall() {
+		return isBeschleunigterFall;
 	}
 }

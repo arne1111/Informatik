@@ -7,6 +7,7 @@ import javax.swing.JLabel;
 
 import com.hoffrogge.tetris.model.Spielfeld;
 import com.hoffrogge.tetris.model.Spielfenster;
+import com.hoffrogge.tetris.model.TetrisKeyListener;
 import com.hoffrogge.tetris.model.TetrisKonstanten;
 import com.hoffrogge.tetris.model.Vorschau;
 
@@ -21,6 +22,8 @@ public class Spiel implements Runnable {
 	private JLabel levelWertLabel;
 	private JLabel reihenWertLabel;
 
+	private TetrisKeyListener tetrisKeyListener;
+
 	private int level = 1;
 	private int punkte = 0;
 	private int reihen = 0;
@@ -29,6 +32,7 @@ public class Spiel implements Runnable {
 
 		spielfeld = spielfenster.getSpielfeld();
 		vorschau = spielfenster.getVorschau();
+		tetrisKeyListener = spielfenster.getTetrisKeyListener();
 
 		spielfeld.setSpiel(this);
 
@@ -92,9 +96,13 @@ public class Spiel implements Runnable {
 		}
 	}
 
-	public void erhoehePunkte() {
+	public void erhoehePunkteFreierFall() {
 
-		punkte++;
+		if (tetrisKeyListener.isBeschleunigterFall())
+			punkte += level * 3 + 21;
+		else
+			punkte += level * 3 + 3;
+
 		pruefeUndSetzeLevel();
 	}
 

@@ -16,6 +16,8 @@ public class Spielfenster extends JFrame {
 	private JLabel reihenWertLabel;
 	private JLabel punkteWertLabel;
 
+	private TetrisKeyListener tetrisKeyListener;
+
 	public Spielfenster() {
 
 		setTitle("Hoffrogge Tetris Klon");
@@ -33,7 +35,8 @@ public class Spielfenster extends JFrame {
 				TetrisKonstanten.SPIELFELD_BREITE, TetrisKonstanten.SPIELFELD_HOEHE);
 		getContentPane().add(spielfeld);
 
-		addKeyListener(new TetrisKeyListener(spielfeld));
+		tetrisKeyListener = new TetrisKeyListener(spielfeld);
+		addKeyListener(tetrisKeyListener);
 
 		vorschau = new Vorschau();
 		vorschau.setBackground(TetrisKonstanten.HINTERGRUND.konvertiereZuColor());
@@ -107,5 +110,9 @@ public class Spielfenster extends JFrame {
 
 	public JLabel getPunkteWertLabel() {
 		return punkteWertLabel;
+	}
+
+	public TetrisKeyListener getTetrisKeyListener() {
+		return tetrisKeyListener;
 	}
 }
