@@ -9,6 +9,7 @@ import com.hoffrogge.tetris.model.Spielfeld;
 import com.hoffrogge.tetris.model.Spielfenster;
 import com.hoffrogge.tetris.model.TetrisKeyListener;
 import com.hoffrogge.tetris.model.TetrisKonstanten;
+import com.hoffrogge.tetris.model.TetrisMusikSpieler;
 import com.hoffrogge.tetris.model.Vorschau;
 
 public class Spiel implements Runnable {
@@ -18,6 +19,7 @@ public class Spiel implements Runnable {
 
 	private boolean spielLaeuft;
 	private Thread spielThread;
+	private Thread soundThread;
 	private JLabel punkteWertLabel;
 	private JLabel levelWertLabel;
 	private JLabel reihenWertLabel;
@@ -88,6 +90,9 @@ public class Spiel implements Runnable {
 
 		spielThread = new Thread(this);
 		spielThread.start();
+
+		soundThread = new Thread(new TetrisMusikSpieler());
+		soundThread.start();
 	}
 
 	public void beendeSpiel() {
@@ -95,7 +100,10 @@ public class Spiel implements Runnable {
 		spielLaeuft = false;
 
 		try {
+
 			spielThread.join();
+			soundThread.join();
+
 		} catch (InterruptedException e) {
 			Logger.getGlobal().log(Level.OFF, e.getMessage(), e);
 			Thread.currentThread().interrupt();

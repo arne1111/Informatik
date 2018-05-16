@@ -26,7 +26,7 @@ public class TetrisKonstanten {
 	public static final int LABEL_RECHTS_POS_Y = VORSCHAU_HOEHE + BLOCK_BREITE * 2;
 
 	public static final int FENSTER_BREITE = SPIELFELD_BREITE + VORSCHAU_BREITE + BLOCK_BREITE;
-	public static final int FENSTER_HOEHE = SPIELFELD_HOEHE + BLOCK_BREITE * 3;
+	public static final int FENSTER_HOEHE = SPIELFELD_HOEHE + BLOCK_BREITE;
 
 	public static final int SPIEL_GESCHWINDIGKEIT = 500;
 	public static final int SPIEL_GESCHWINDIGKEIT_MIN = 50;
