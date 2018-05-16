@@ -59,7 +59,12 @@ public class Spiel implements Runnable {
 
 			try {
 
-				Thread.sleep(TetrisKonstanten.SPIEL_GESCHWINDIGKEIT);
+				int spielBeschleuniger = (level - 1) * 50;
+
+				int spielGeschwindigkeit = Math.max(TetrisKonstanten.SPIEL_GESCHWINDIGKEIT - spielBeschleuniger,
+						TetrisKonstanten.SPIEL_GESCHWINDIGKEIT_MIN);
+
+				Thread.sleep(spielGeschwindigkeit);
 
 			} catch (InterruptedException e) {
 				Logger.getGlobal().log(Level.OFF, e.getMessage(), e);

@@ -22,7 +22,8 @@ public class TetrisKonstanten {
 	public static final int FENSTER_BREITE = SPIELFELD_BREITE + VORSCHAU_BREITE + BLOCK_BREITE;
 	public static final int FENSTER_HOEHE = SPIELFELD_HOEHE + BLOCK_BREITE;
 
-	public static final int SPIEL_GESCHWINDIGKEIT = 1;
+	public static final int SPIEL_GESCHWINDIGKEIT = 500;
+	public static final int SPIEL_GESCHWINDIGKEIT_MIN = 50;
 	public static final int TETROMINO_FALL_HOEHE = BLOCK_BREITE;
 
 	public static final Farbe HINTERGRUND = new Farbe(193, 188, 172);
@@ -30,4 +31,5 @@ public class TetrisKonstanten {
 	public static final Farbe TEXT = new Farbe(55, 63, 81);
 	public static final Farbe RAHMEN = new Farbe(141, 167, 190);
 	public static final Farbe AKZENT = new Farbe(200, 70, 48);
+
 }
