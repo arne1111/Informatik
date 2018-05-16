@@ -1,8 +1,6 @@
 package com.hoffrogge.tetris.model;
 
 import java.awt.Canvas;
-import java.awt.Color;
-import java.awt.Font;
 import java.awt.Graphics;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -91,15 +89,8 @@ public class Spielfeld extends Canvas {
 	private static void zeichneSpielfeld(Graphics g) {
 
 		/* Hintergrund des Spielfeldes */
-		g.setColor(Color.GRAY);
+		g.setColor(TetrisKonstanten.HINTERGRUND.konvertiereZuColor());
 		g.fillRect(0, 0, TetrisKonstanten.SPIELFELD_BREITE, TetrisKonstanten.SPIELFELD_HOEHE);
-
-		/* Text auf dem Spielfeld */
-		Font f = new Font("Helvetica", Font.PLAIN, 20);
-
-		g.setFont(f);
-		g.setColor(Color.WHITE);
-		g.drawString("Tetris Spielfeld", 10, 20);
 	}
 
 	private Tetromino neuerZufaelligerSpielstein() {

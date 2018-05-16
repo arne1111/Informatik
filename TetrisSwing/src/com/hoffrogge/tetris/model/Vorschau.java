@@ -1,24 +1,13 @@
 package com.hoffrogge.tetris.model;
 
 import java.awt.Canvas;
-import java.awt.Color;
-import java.awt.Font;
 import java.awt.Graphics;
 
 @SuppressWarnings("serial")
 public class Vorschau extends Canvas {
 
 	private TetrominoTyp naechsterSpielsteinTyp;
-	private static final Farbe FUELL_FARBE = new Farbe(80, 90, 80);
-
-	@Override
-	public void paint(Graphics g) {
-
-		Font f = new Font("Helvetica", Font.PLAIN, 20);
-
-		g.setFont(f);
-		g.drawString("Tetris Infofeld", 10, 20);
-	}
+	private static final Farbe FUELL_FARBE = new Farbe(200, 240, 255);
 
 	public void aktualisieren(TetrominoTyp tetrominoTyp) {
 		this.naechsterSpielsteinTyp = tetrominoTyp;
@@ -96,7 +85,7 @@ public class Vorschau extends Canvas {
 	private void zeichneVorschauFeld(Graphics g) {
 
 		/* Hintergrund des Feldes */
-		g.setColor(Color.GRAY);
-		g.fillRect(0, 0, TetrisKonstanten.BLOCK_BREITE * 5, TetrisKonstanten.BLOCK_BREITE * 6);
+		g.setColor(TetrisKonstanten.HINTERGRUND.konvertiereZuColor());
+		g.fillRect(0, 0, TetrisKonstanten.VORSCHAU_BREITE, TetrisKonstanten.VORSCHAU_HOEHE);
 	}
 }
