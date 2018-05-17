@@ -85,7 +85,7 @@ public class Vorschau extends Canvas {
 	private void zeichneVorschauFeld(Graphics g) {
 
 		/* Hintergrund des Feldes */
-		g.setColor(TetrisKonstanten.HINTERGRUND.konvertiereZuColor());
+		g.setColor(TetrisKonstanten.VORDERGRUND.konvertiereZuColor());
 		g.fillRect(0, 0, TetrisKonstanten.VORSCHAU_BREITE, TetrisKonstanten.VORSCHAU_HOEHE);
 	}
 }

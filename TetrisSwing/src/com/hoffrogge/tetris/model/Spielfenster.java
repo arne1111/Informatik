@@ -21,6 +21,8 @@ public class Spielfenster extends JFrame {
 
 	public Spielfenster() {
 
+		getContentPane().setBackground(TetrisKonstanten.HINTERGRUND.konvertiereZuColor());
+
 		setTitle("Hoffrogge Tetris Klon");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 

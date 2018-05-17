@@ -34,8 +34,8 @@ public class TetrisKonstanten {
 	public static final int SPIEL_GESCHWINDIGKEIT_MIN = 50;
 	public static final int TETROMINO_FALL_HOEHE = BLOCK_BREITE;
 
-	public static final Farbe HINTERGRUND = new Farbe(193, 188, 172);
-	public static final Farbe VORDERGRUND = new Farbe(232, 247, 238);
+	public static final Farbe HINTERGRUND = new Farbe(251, 246, 242);
+	public static final Farbe VORDERGRUND = new Farbe(250, 250, 250);
 	public static final Farbe TEXT = new Farbe(55, 63, 81);
 	public static final Farbe RAHMEN = new Farbe(141, 167, 190);
 	public static final Farbe AKZENT = new Farbe(200, 70, 48);

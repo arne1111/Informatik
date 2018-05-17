@@ -103,7 +103,7 @@ public class Spielfeld extends Canvas {
 	private static void zeichneSpielfeld(Graphics g) {
 
 		/* Hintergrund des Spielfeldes */
-		g.setColor(TetrisKonstanten.HINTERGRUND.konvertiereZuColor());
+		g.setColor(TetrisKonstanten.VORDERGRUND.konvertiereZuColor());
 		g.fillRect(0, 0, TetrisKonstanten.SPIELFELD_BREITE, TetrisKonstanten.SPIELFELD_HOEHE);
 	}
 
