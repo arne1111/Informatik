@@ -40,4 +40,5 @@ public class TetrisKonstanten {
 	public static final Farbe RAHMEN = new Farbe(141, 167, 190);
 	public static final Farbe AKZENT = new Farbe(200, 70, 48);
 
+	public static final Farbe TETROMINO_FARBE_BLOCK = new Farbe(200, 70, 48);
 }
