@@ -1,7 +1,7 @@
 package com.hoffrogge.tetris.start;
 
 import com.hoffrogge.tetris.logik.Spiel;
-import com.hoffrogge.tetris.model.Spielfenster;
+import com.hoffrogge.tetris.view.Spielfenster;
 
 public class Main {
 

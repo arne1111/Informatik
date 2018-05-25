@@ -1,4 +1,4 @@
-package com.hoffrogge.tetris.model;
+package com.hoffrogge.tetris.view;
 
 import java.awt.Dimension;
 import java.awt.Font;
@@ -6,6 +6,10 @@ import java.awt.Font;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.SwingConstants;
+
+import com.hoffrogge.tetris.model.Spielfeld;
+import com.hoffrogge.tetris.model.TetrisKeyListener;
+import com.hoffrogge.tetris.model.TetrisKonstanten;
 
 @SuppressWarnings("serial")
 public class Spielfenster extends JFrame {

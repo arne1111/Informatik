@@ -4,6 +4,7 @@ import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 
 import com.hoffrogge.tetris.logik.Spiel;
+import com.hoffrogge.tetris.model.tetromino.Tetromino;
 
 public class TetrisKeyListener implements KeyListener {
 

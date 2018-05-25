@@ -1,4 +1,6 @@
-package com.hoffrogge.tetris.model;
+package com.hoffrogge.tetris.model.tetromino;
+
+import com.hoffrogge.tetris.model.TetrisKonstanten;
 
 public class TetrominoBlock extends Tetromino {
 

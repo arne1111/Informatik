@@ -1,14 +1,16 @@
-package com.hoffrogge.tetris.model;
+package com.hoffrogge.tetris.model.tetromino;
 
-public class TetrominoL extends Tetromino {
+import com.hoffrogge.tetris.model.TetrisKonstanten;
+
+public class TetrominoUmgedrehtesL extends Tetromino {
 
 	private int kantenLaengeViertelBlock;
 
-	public TetrominoL() {
+	public TetrominoUmgedrehtesL() {
 		this(TetrisKonstanten.SPIELFELD_BREITE / 2, -TetrisKonstanten.BLOCK_BREITE * 4);
 	}
 
-	public TetrominoL(int x, int y) {
+	public TetrominoUmgedrehtesL(int x, int y) {
 
 		this.x = x;
 		this.y = y;
@@ -19,6 +21,7 @@ public class TetrominoL extends Tetromino {
 		viertelBloecke.add(new ViertelBlock(x, y));
 		viertelBloecke.add(new ViertelBlock(x, y + kantenLaengeViertelBlock));
 		viertelBloecke.add(new ViertelBlock(x, y + kantenLaengeViertelBlock * 2));
-		viertelBloecke.add(new ViertelBlock(x + kantenLaengeViertelBlock, y + kantenLaengeViertelBlock * 2));
+		viertelBloecke.add(new ViertelBlock(x - kantenLaengeViertelBlock, y + kantenLaengeViertelBlock * 2));
 	}
+
 }

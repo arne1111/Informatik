@@ -1,4 +1,4 @@
-package com.hoffrogge.tetris.model;
+package com.hoffrogge.tetris.model.tetromino;
 
 import java.util.Arrays;
 import java.util.Collections;

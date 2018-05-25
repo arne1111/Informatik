@@ -1,8 +1,12 @@
-package com.hoffrogge.tetris.model;
+package com.hoffrogge.tetris.model.tetromino;
 
 import java.awt.Graphics;
 import java.util.ArrayList;
 import java.util.List;
+
+import com.hoffrogge.tetris.model.Farbe;
+import com.hoffrogge.tetris.model.Punkt;
+import com.hoffrogge.tetris.model.TetrisKonstanten;
 
 public abstract class Tetromino implements TetrominoGeometrie {
 

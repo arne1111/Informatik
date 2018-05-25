@@ -12,6 +12,11 @@ import java.util.Map.Entry;
 import java.util.concurrent.CopyOnWriteArrayList;
 
 import com.hoffrogge.tetris.logik.Spiel;
+import com.hoffrogge.tetris.model.tetromino.Tetromino;
+import com.hoffrogge.tetris.model.tetromino.TetrominoFactory;
+import com.hoffrogge.tetris.model.tetromino.TetrominoGeometrie;
+import com.hoffrogge.tetris.model.tetromino.TetrominoTyp;
+import com.hoffrogge.tetris.model.tetromino.ViertelBlock;
 
 @SuppressWarnings("serial")
 public class Spielfeld extends Canvas {

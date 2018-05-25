@@ -1,7 +1,14 @@
-package com.hoffrogge.tetris.model;
+package com.hoffrogge.tetris.view;
 
 import java.awt.Canvas;
 import java.awt.Graphics;
+
+import com.hoffrogge.tetris.model.Farbe;
+import com.hoffrogge.tetris.model.TetrisKonstanten;
+import com.hoffrogge.tetris.model.tetromino.Tetromino;
+import com.hoffrogge.tetris.model.tetromino.TetrominoFactory;
+import com.hoffrogge.tetris.model.tetromino.TetrominoTyp;
+import com.hoffrogge.tetris.model.tetromino.ViertelBlock;
 
 @SuppressWarnings("serial")
 public class Vorschau extends Canvas {

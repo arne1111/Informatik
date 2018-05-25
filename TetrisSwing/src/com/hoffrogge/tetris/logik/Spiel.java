@@ -6,11 +6,11 @@ import java.util.logging.Logger;
 import javax.swing.JLabel;
 
 import com.hoffrogge.tetris.model.Spielfeld;
-import com.hoffrogge.tetris.model.Spielfenster;
 import com.hoffrogge.tetris.model.TetrisKeyListener;
 import com.hoffrogge.tetris.model.TetrisKonstanten;
 import com.hoffrogge.tetris.model.TetrisMusikSpieler;
-import com.hoffrogge.tetris.model.Vorschau;
+import com.hoffrogge.tetris.view.Spielfenster;
+import com.hoffrogge.tetris.view.Vorschau;
 
 public class Spiel implements Runnable {
 
