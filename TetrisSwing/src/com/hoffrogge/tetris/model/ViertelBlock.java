@@ -3,7 +3,7 @@ package com.hoffrogge.tetris.model;
 import java.awt.Graphics;
 import java.util.Random;
 
-public class ViertelBlock implements GeometrischeFigur, Comparable<ViertelBlock> {
+public class ViertelBlock implements TetrominoGeometrie, Comparable<ViertelBlock> {
 
 	private int x;
 	private int y;

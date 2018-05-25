@@ -8,14 +8,6 @@ public interface GeometrischeFigur {
 
 	Punkt getMittelPunkt();
 
-	int getHoechstesY();
-
-	int getTiefstesY();
-
-	int getKanteLinksX();
-
-	int getKanteRechtsX();
-
 	void setDurchmesser(int d);
 
 	void setLinienFarbe(Farbe farbe);

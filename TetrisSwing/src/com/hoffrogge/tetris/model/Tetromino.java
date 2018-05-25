@@ -4,7 +4,7 @@ import java.awt.Graphics;
 import java.util.ArrayList;
 import java.util.List;
 
-public abstract class Tetromino implements GeometrischeFigur {
+public abstract class Tetromino implements TetrominoGeometrie {
 
 	int durchmesser;
 	int x;

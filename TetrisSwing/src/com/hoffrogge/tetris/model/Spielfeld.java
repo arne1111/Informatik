@@ -91,7 +91,7 @@ public class Spielfeld extends Canvas {
 
 	public boolean istSpielfeldVoll() {
 
-		for (GeometrischeFigur gefallenerStein : gefalleneSteine) {
+		for (TetrominoGeometrie gefallenerStein : gefalleneSteine) {
 
 			if (gefallenerStein.getHoechstesY() <= 0)
 				return true;
