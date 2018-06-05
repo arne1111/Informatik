@@ -12,7 +12,6 @@ import java.util.Map.Entry;
 import java.util.concurrent.CopyOnWriteArrayList;
 
 import com.hoffrogge.tetris.logik.Spiel;
-import com.hoffrogge.tetris.model.tetromino.Quadrat;
 import com.hoffrogge.tetris.model.tetromino.TetrominoSpielstein;
 import com.hoffrogge.tetris.model.tetromino.TetrominoTyp;
 import com.hoffrogge.tetris.model.tetromino.ViertelBlock;
@@ -124,23 +123,7 @@ public class Spielfeld extends Canvas {
 
 	private TetrominoSpielstein neuerZufaelligerSpielstein() {
 
-		/* bei Spielstart gibt es noch keinen naechsten Stein */
-		// if (naechsterSpielsteinTyp == null)
-		// naechsterSpielsteinTyp = TetrominoFactory.erstelleZufaelligenTetrominoTyp();
-		//
-		// TetrominoSpielstein tetromino =
-		// TetrominoFactory.erstelleTetromino(naechsterSpielsteinTyp);
-		//
-		// naechsterSpielsteinTyp = TetrominoFactory.erstelleZufaelligenTetrominoTyp();
-		//
-		// return tetromino;
-
-		Quadrat rahmen = new Quadrat();
-		rahmen.setLinienFarbe(new Farbe(255, 153, 0));
-		rahmen.setMittelpunkt(20, 20);
-		rahmen.setDurchmesser(20);
-
-		return rahmen;
+		return null;
 	}
 
 	public TetrominoTyp getNaechsterSpielsteinTyp() {
