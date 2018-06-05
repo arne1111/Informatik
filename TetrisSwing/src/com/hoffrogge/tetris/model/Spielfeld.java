@@ -63,6 +63,12 @@ public class Spielfeld extends Canvas {
 		}
 	}
 
+	/* Baut hier eure eigenen Spielsteine ein */
+	private TetrominoSpielstein neuerZufaelligerSpielstein() {
+
+		return null;
+	}
+
 	public void darstellen() {
 
 		Graphics g = null;
@@ -121,11 +127,6 @@ public class Spielfeld extends Canvas {
 				TetrisKonstanten.SPIELFELD_HOEHE / 2);
 	}
 
-	private TetrominoSpielstein neuerZufaelligerSpielstein() {
-
-		return null;
-	}
-
 	public TetrominoTyp getNaechsterSpielsteinTyp() {
 		return naechsterSpielsteinTyp;
 	}
@@ -146,7 +147,6 @@ public class Spielfeld extends Canvas {
 		return false;
 	}
 
-	@SuppressWarnings("boxing")
 	private void loescheVolleReihen() {
 
 		Collections.sort(gefalleneSteine);
