@@ -13,21 +13,12 @@ public abstract class Tetromino implements TetrominoSpielstein {
 	int durchmesser;
 	int x;
 	int y;
+
 	Farbe linienFarbe;
 
 	protected List<ViertelBlock> viertelBloecke = new ArrayList<>(4);
 
 	/* Methoden aus GeometrischeFigur */
-
-	@Override
-	public void setDurchmesser(int d) {
-		this.durchmesser = d;
-	}
-
-	@Override
-	public void setLinienFarbe(Farbe farbe) {
-		this.linienFarbe = farbe;
-	}
 
 	@Override
 	public void setMittelpunkt(int x, int y) {
@@ -38,6 +29,16 @@ public abstract class Tetromino implements TetrominoSpielstein {
 	@Override
 	public Punkt getMittelPunkt() {
 		return new Punkt(x, y);
+	}
+
+	@Override
+	public void setDurchmesser(int d) {
+		this.durchmesser = d;
+	}
+
+	@Override
+	public void setLinienFarbe(Farbe farbe) {
+		this.linienFarbe = farbe;
 	}
 
 	@Override
@@ -70,8 +71,110 @@ public abstract class Tetromino implements TetrominoSpielstein {
 	/* Methoden aus TetrominoGeometrie */
 
 	@Override
-	public List<ViertelBlock> getViertelBloecke() {
-		return viertelBloecke;
+	public int getHoechstesY() {
+
+		int hoechstesY = TetrisKonstanten.SPIELFELD_HOEHE;
+
+		for (ViertelBlock block : viertelBloecke)
+			if (block.getHoechstesY() < hoechstesY)
+				hoechstesY = block.getHoechstesY();
+
+		return hoechstesY;
+	}
+
+	@Override
+	public int getTiefstesY() {
+
+		int tiefstesY = 0;
+
+		for (ViertelBlock block : viertelBloecke)
+			if (block.getTiefstesY() > tiefstesY)
+				tiefstesY = block.getTiefstesY();
+
+		return tiefstesY;
+	}
+
+	@Override
+	public int getKanteLinksX() {
+
+		int kanteLinksX = TetrisKonstanten.SPIELFELD_BREITE;
+
+		for (ViertelBlock block : viertelBloecke)
+			if (block.getKanteLinksX() < kanteLinksX)
+				kanteLinksX = block.getKanteLinksX();
+
+		return kanteLinksX;
+	}
+
+	@Override
+	public int getKanteRechtsX() {
+
+		int kanteRechtsX = 0;
+
+		for (ViertelBlock block : viertelBloecke)
+			if (block.getKanteRechtsX() > kanteRechtsX)
+				kanteRechtsX = block.getKanteRechtsX();
+
+		return kanteRechtsX;
+	}
+
+	@Override
+	public void bewegeNachUnten() {
+
+		if (viertelBloecke.isEmpty())
+			return;
+
+		for (ViertelBlock block : viertelBloecke)
+			block.setY(block.getY() + TetrisKonstanten.TETROMINO_FALL_HOEHE);
+	}
+
+	@Override
+	public void bewegeNachRechts() {
+
+		if (viertelBloecke.isEmpty())
+			return;
+
+		if (getKanteRechtsX() == TetrisKonstanten.SPIELFELD_BREITE)
+			return;
+
+		for (ViertelBlock block : viertelBloecke) {
+
+			int neuesBlockX = block.getX() + TetrisKonstanten.BLOCK_BREITE;
+
+			if (neuesBlockX <= TetrisKonstanten.SPIELFELD_BREITE)
+				block.setX(neuesBlockX);
+		}
+	}
+
+	@Override
+	public void bewegeNachLinks() {
+
+		if (viertelBloecke.isEmpty())
+			return;
+
+		if (getKanteLinksX() == 0)
+			return;
+
+		for (ViertelBlock block : viertelBloecke) {
+
+			int neuesBlockX = block.getX() - TetrisKonstanten.BLOCK_BREITE;
+
+			if (neuesBlockX >= 0)
+				block.setX(neuesBlockX);
+		}
+	}
+
+	@Override
+	public boolean faelltAuf(ViertelBlock block) {
+
+		if (viertelBloecke.isEmpty())
+			return false;
+
+		for (ViertelBlock fallenderBlock : viertelBloecke)
+			if (fallenderBlock.getX() == block.getX() && fallenderBlock.getTiefstesY() == block.getHoechstesY())
+				return true;
+
+		return false;
 	}
 
 	/* gegen den Uhrzeigersinn */
@@ -131,7 +234,7 @@ public abstract class Tetromino implements TetrominoSpielstein {
 
 					if (punkt.getX() == xBlock && punkt.getY() == yBlock) {
 
-						Punkt neuerPunkt = this.findePunkt(tetrominoMatrix, i, j);
+						Punkt neuerPunkt = findePunkt(tetrominoMatrix, i, j);
 
 						if (neuerPunkt == null)
 							throw new IllegalStateException("Punkt nicht gefunden!");
@@ -146,7 +249,6 @@ public abstract class Tetromino implements TetrominoSpielstein {
 		}
 	}
 
-	@SuppressWarnings("static-method")
 	Punkt findePunkt(Punkt[][] tetrominoMatrix, int i, int j) {
 
 		Punkt neuerPunkt = null;
@@ -176,109 +278,7 @@ public abstract class Tetromino implements TetrominoSpielstein {
 	}
 
 	@Override
-	public boolean faelltAuf(ViertelBlock block) {
-
-		if (viertelBloecke.isEmpty())
-			return false;
-
-		for (ViertelBlock fallenderBlock : viertelBloecke)
-			if (fallenderBlock.getX() == block.getX() && fallenderBlock.getTiefstesY() == block.getHoechstesY())
-				return true;
-
-		return false;
-	}
-
-	@Override
-	public int getHoechstesY() {
-
-		int hoechstesY = TetrisKonstanten.SPIELFELD_HOEHE;
-
-		for (ViertelBlock block : viertelBloecke)
-			if (block.getHoechstesY() < hoechstesY)
-				hoechstesY = block.getHoechstesY();
-
-		return hoechstesY;
-	}
-
-	@Override
-	public int getTiefstesY() {
-
-		int tiefstesY = 0;
-
-		for (ViertelBlock block : viertelBloecke)
-			if (block.getTiefstesY() > tiefstesY)
-				tiefstesY = block.getTiefstesY();
-
-		return tiefstesY;
-	}
-
-	@Override
-	public int getKanteLinksX() {
-
-		int kanteLinksX = TetrisKonstanten.SPIELFELD_BREITE;
-
-		for (ViertelBlock block : viertelBloecke)
-			if (block.getKanteLinksX() < kanteLinksX)
-				kanteLinksX = block.getKanteLinksX();
-
-		return kanteLinksX;
-	}
-
-	@Override
-	public int getKanteRechtsX() {
-
-		int kanteRechtsX = 0;
-
-		for (ViertelBlock block : viertelBloecke)
-			if (block.getKanteRechtsX() > kanteRechtsX)
-				kanteRechtsX = block.getKanteRechtsX();
-
-		return kanteRechtsX;
-	}
-
-	@Override
-	public void bewegeNachLinks() {
-
-		if (viertelBloecke.isEmpty())
-			return;
-
-		if (getKanteLinksX() == 0)
-			return;
-
-		for (ViertelBlock block : viertelBloecke) {
-
-			int neuesBlockX = block.getX() - TetrisKonstanten.BLOCK_BREITE;
-
-			if (neuesBlockX >= 0)
-				block.setX(neuesBlockX);
-		}
-	}
-
-	@Override
-	public void bewegeNachRechts() {
-
-		if (viertelBloecke.isEmpty())
-			return;
-
-		if (getKanteRechtsX() == TetrisKonstanten.SPIELFELD_BREITE)
-			return;
-
-		for (ViertelBlock block : viertelBloecke) {
-
-			int neuesBlockX = block.getX() + TetrisKonstanten.BLOCK_BREITE;
-
-			if (neuesBlockX <= TetrisKonstanten.SPIELFELD_BREITE)
-				block.setX(neuesBlockX);
-		}
-	}
-
-	@Override
-	public void bewegeNachUnten() {
-
-		if (viertelBloecke.isEmpty())
-			return;
-
-		for (ViertelBlock block : viertelBloecke)
-			block.setY(block.getY() + TetrisKonstanten.TETROMINO_FALL_HOEHE);
+	public List<ViertelBlock> getViertelBloecke() {
+		return viertelBloecke;
 	}
 }
