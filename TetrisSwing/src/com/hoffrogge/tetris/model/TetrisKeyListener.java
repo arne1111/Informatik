@@ -4,7 +4,7 @@ import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 
 import com.hoffrogge.tetris.logik.Spiel;
-import com.hoffrogge.tetris.model.tetromino.Tetromino;
+import com.hoffrogge.tetris.model.tetromino.TetrominoSpielstein;
 
 public class TetrisKeyListener implements KeyListener {
 
@@ -28,7 +28,7 @@ public class TetrisKeyListener implements KeyListener {
 	@Override
 	public void keyPressed(KeyEvent e) {
 
-		Tetromino fallenderSpielstein = spielfeld.getFallenderSpielstein();
+		TetrominoSpielstein fallenderSpielstein = spielfeld.getFallenderSpielstein();
 
 		if (fallenderSpielstein == null)
 			return;

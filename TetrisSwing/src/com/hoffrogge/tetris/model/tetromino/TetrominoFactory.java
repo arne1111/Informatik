@@ -19,7 +19,7 @@ public class TetrominoFactory {
 		return TYPEN.get(ZUFALL.nextInt(ANZAHL));
 	}
 
-	public static Tetromino erstelleTetromino(TetrominoTyp typ) {
+	public static TetrominoSpielstein erstelleTetromino(TetrominoTyp typ) {
 
 		switch (typ) {
 
@@ -49,7 +49,7 @@ public class TetrominoFactory {
 		}
 	}
 
-	public static Tetromino erstelleTetromino(TetrominoTyp typ, int x, int y) {
+	public static TetrominoSpielstein erstelleTetromino(TetrominoTyp typ, int x, int y) {
 
 		switch (typ) {
 

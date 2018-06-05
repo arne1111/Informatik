@@ -1,13 +1,14 @@
 package com.hoffrogge.tetris.model.tetromino;
 
 import java.awt.Graphics;
+import java.util.List;
 import java.util.Random;
 
 import com.hoffrogge.tetris.model.Farbe;
 import com.hoffrogge.tetris.model.Punkt;
 import com.hoffrogge.tetris.model.TetrisKonstanten;
 
-public class ViertelBlock implements TetrominoGeometrie, Comparable<ViertelBlock> {
+public class ViertelBlock implements TetrominoSpielstein, Comparable<ViertelBlock> {
 
 	private int x;
 	private int y;
@@ -145,5 +146,35 @@ public class ViertelBlock implements TetrominoGeometrie, Comparable<ViertelBlock
 		if (y != other.y)
 			return false;
 		return true;
+	}
+
+	@Override
+	public void bewegeNachRechts() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void bewegeNachLinks() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public boolean faelltAuf(ViertelBlock block) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	@Override
+	public void rotiereNachLinks() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public List<ViertelBlock> getViertelBloecke() {
+		// TODO Auto-generated method stub
+		return null;
 	}
 }

@@ -8,7 +8,7 @@ import com.hoffrogge.tetris.model.Farbe;
 import com.hoffrogge.tetris.model.Punkt;
 import com.hoffrogge.tetris.model.TetrisKonstanten;
 
-public abstract class Tetromino implements TetrominoGeometrie {
+public abstract class Tetromino implements TetrominoSpielstein {
 
 	int durchmesser;
 	int x;
@@ -17,11 +17,65 @@ public abstract class Tetromino implements TetrominoGeometrie {
 
 	protected List<ViertelBlock> viertelBloecke = new ArrayList<>(4);
 
+	/* Methoden aus GeometrischeFigur */
+
+	@Override
+	public void setDurchmesser(int d) {
+		this.durchmesser = d;
+	}
+
+	@Override
+	public void setLinienFarbe(Farbe farbe) {
+		this.linienFarbe = farbe;
+	}
+
+	@Override
+	public void setMittelpunkt(int x, int y) {
+		this.x = x;
+		this.y = y;
+	}
+
+	@Override
+	public Punkt getMittelPunkt() {
+		return new Punkt(x, y);
+	}
+
+	@Override
+	public void zeichnen(Graphics graphics) {
+
+		if (graphics == null)
+			return;
+
+		zeichneViertelBloecke(graphics);
+	}
+
+	private void zeichneViertelBloecke(Graphics graphics) {
+
+		if (viertelBloecke.isEmpty())
+			return;
+
+		if (linienFarbe == null)
+			linienFarbe = new Farbe(0, 0, 0);
+
+		Farbe fuellFarbe = viertelBloecke.get(0).getFuellFarbe();
+
+		for (ViertelBlock block : viertelBloecke) {
+
+			block.setLinienFarbe(linienFarbe);
+			block.setFuellFarbe(fuellFarbe);
+			block.zeichnen(graphics);
+		}
+	}
+
+	/* Methoden aus TetrominoGeometrie */
+
+	@Override
 	public List<ViertelBlock> getViertelBloecke() {
 		return viertelBloecke;
 	}
 
 	/* gegen den Uhrzeigersinn */
+	@Override
 	public void rotiereNachLinks() {
 
 		if (viertelBloecke.size() != 4)
@@ -121,6 +175,7 @@ public abstract class Tetromino implements TetrominoGeometrie {
 		return neuerPunkt;
 	}
 
+	@Override
 	public boolean faelltAuf(ViertelBlock block) {
 
 		if (viertelBloecke.isEmpty())
@@ -131,27 +186,6 @@ public abstract class Tetromino implements TetrominoGeometrie {
 				return true;
 
 		return false;
-	}
-
-	@Override
-	public void setDurchmesser(int d) {
-		this.durchmesser = d;
-	}
-
-	@Override
-	public void setLinienFarbe(Farbe farbe) {
-		this.linienFarbe = farbe;
-	}
-
-	@Override
-	public void setMittelpunkt(int x, int y) {
-		this.x = x;
-		this.y = y;
-	}
-
-	@Override
-	public Punkt getMittelPunkt() {
-		return new Punkt(x, y);
 	}
 
 	@Override
@@ -203,32 +237,6 @@ public abstract class Tetromino implements TetrominoGeometrie {
 	}
 
 	@Override
-	public void zeichnen(Graphics graphics) {
-
-		if (graphics == null)
-			return;
-
-		zeichneViertelBloecke(graphics);
-	}
-
-	void zeichneViertelBloecke(Graphics graphics) {
-
-		if (viertelBloecke.isEmpty())
-			return;
-
-		if (linienFarbe == null)
-			linienFarbe = new Farbe(0, 0, 0);
-
-		Farbe fuellFarbe = viertelBloecke.get(0).getFuellFarbe();
-
-		for (ViertelBlock block : viertelBloecke) {
-
-			block.setLinienFarbe(linienFarbe);
-			block.setFuellFarbe(fuellFarbe);
-			block.zeichnen(graphics);
-		}
-	}
-
 	public void bewegeNachLinks() {
 
 		if (viertelBloecke.isEmpty())
@@ -246,6 +254,7 @@ public abstract class Tetromino implements TetrominoGeometrie {
 		}
 	}
 
+	@Override
 	public void bewegeNachRechts() {
 
 		if (viertelBloecke.isEmpty())
@@ -263,6 +272,7 @@ public abstract class Tetromino implements TetrominoGeometrie {
 		}
 	}
 
+	@Override
 	public void bewegeNachUnten() {
 
 		if (viertelBloecke.isEmpty())

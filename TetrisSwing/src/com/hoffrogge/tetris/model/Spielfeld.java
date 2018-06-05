@@ -12,16 +12,15 @@ import java.util.Map.Entry;
 import java.util.concurrent.CopyOnWriteArrayList;
 
 import com.hoffrogge.tetris.logik.Spiel;
-import com.hoffrogge.tetris.model.tetromino.Tetromino;
-import com.hoffrogge.tetris.model.tetromino.TetrominoFactory;
-import com.hoffrogge.tetris.model.tetromino.TetrominoGeometrie;
+import com.hoffrogge.tetris.model.tetromino.Quadrat;
+import com.hoffrogge.tetris.model.tetromino.TetrominoSpielstein;
 import com.hoffrogge.tetris.model.tetromino.TetrominoTyp;
 import com.hoffrogge.tetris.model.tetromino.ViertelBlock;
 
 @SuppressWarnings("serial")
 public class Spielfeld extends Canvas {
 
-	private transient Tetromino fallenderSpielstein;
+	private transient TetrominoSpielstein fallenderSpielstein;
 	private TetrominoTyp naechsterSpielsteinTyp;
 	private List<ViertelBlock> gefalleneSteine;
 	private Spiel spiel;
@@ -31,7 +30,7 @@ public class Spielfeld extends Canvas {
 		gefalleneSteine = new CopyOnWriteArrayList<>();
 	}
 
-	public Tetromino getFallenderSpielstein() {
+	public TetrominoSpielstein getFallenderSpielstein() {
 		return fallenderSpielstein;
 	}
 
@@ -96,7 +95,7 @@ public class Spielfeld extends Canvas {
 
 	public boolean istSpielfeldVoll() {
 
-		for (TetrominoGeometrie gefallenerStein : gefalleneSteine) {
+		for (TetrominoSpielstein gefallenerStein : gefalleneSteine) {
 
 			if (gefallenerStein.getHoechstesY() <= 0)
 				return true;
@@ -123,17 +122,25 @@ public class Spielfeld extends Canvas {
 				TetrisKonstanten.SPIELFELD_HOEHE / 2);
 	}
 
-	private Tetromino neuerZufaelligerSpielstein() {
+	private TetrominoSpielstein neuerZufaelligerSpielstein() {
 
 		/* bei Spielstart gibt es noch keinen naechsten Stein */
-		if (naechsterSpielsteinTyp == null)
-			naechsterSpielsteinTyp = TetrominoFactory.erstelleZufaelligenTetrominoTyp();
+		// if (naechsterSpielsteinTyp == null)
+		// naechsterSpielsteinTyp = TetrominoFactory.erstelleZufaelligenTetrominoTyp();
+		//
+		// TetrominoSpielstein tetromino =
+		// TetrominoFactory.erstelleTetromino(naechsterSpielsteinTyp);
+		//
+		// naechsterSpielsteinTyp = TetrominoFactory.erstelleZufaelligenTetrominoTyp();
+		//
+		// return tetromino;
 
-		Tetromino tetromino = TetrominoFactory.erstelleTetromino(naechsterSpielsteinTyp);
+		Quadrat rahmen = new Quadrat();
+		rahmen.setLinienFarbe(new Farbe(255, 153, 0));
+		rahmen.setMittelpunkt(20, 20);
+		rahmen.setDurchmesser(20);
 
-		naechsterSpielsteinTyp = TetrominoFactory.erstelleZufaelligenTetrominoTyp();
-
-		return tetromino;
+		return rahmen;
 	}
 
 	public TetrominoTyp getNaechsterSpielsteinTyp() {
