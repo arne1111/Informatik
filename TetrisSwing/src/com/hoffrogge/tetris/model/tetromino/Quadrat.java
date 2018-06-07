@@ -75,14 +75,12 @@ public class Quadrat implements TetrominoSpielstein {
 
 	@Override
 	public int getHoechstesY() {
-		// TODO Auto-generated method stub
-		return 0;
+		return mittelpunktY - durchmesser / 2;
 	}
 
 	@Override
 	public int getTiefstesY() {
-		// TODO Auto-generated method stub
-		return 0;
+		return mittelpunktY + durchmesser / 2;
 	}
 
 	@Override

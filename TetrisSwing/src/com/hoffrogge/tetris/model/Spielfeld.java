@@ -54,7 +54,10 @@ public class Spielfeld extends Canvas {
 
 			if (hatFallenderSteinBodenErreicht() || faelltFallenderSteinAufAnderenStein()) {
 
-				gefalleneSteine.addAll(fallenderSpielstein.getViertelBloecke());
+				List<ViertelBlock> viertelBloecke = fallenderSpielstein.getViertelBloecke();
+
+				if (viertelBloecke != null)
+					gefalleneSteine.addAll(viertelBloecke);
 
 				fallenderSpielstein = null;
 
@@ -132,7 +135,7 @@ public class Spielfeld extends Canvas {
 	}
 
 	private boolean hatFallenderSteinBodenErreicht() {
-		return fallenderSpielstein.getTiefstesY() == TetrisKonstanten.SPIELFELD_HOEHE;
+		return fallenderSpielstein.getTiefstesY() >= TetrisKonstanten.SPIELFELD_HOEHE;
 	}
 
 	private boolean faelltFallenderSteinAufAnderenStein() {

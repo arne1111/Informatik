@@ -2,6 +2,7 @@ package com.hoffrogge.tetris.model.tetromino;
 
 import java.awt.Color;
 import java.awt.Graphics;
+import java.util.Arrays;
 import java.util.List;
 
 import com.hoffrogge.tetris.model.Farbe;
@@ -20,8 +21,7 @@ public class Kreis implements TetrominoSpielstein {
 
 	@Override
 	public int getTiefstesY() {
-		// TODO Auto-generated method stub
-		return 0;
+		return mittelpunktY + 100;
 	}
 
 	@Override
@@ -38,9 +38,7 @@ public class Kreis implements TetrominoSpielstein {
 
 	@Override
 	public void bewegeNachUnten() {
-
-		if (mittelpunktY < 700)
-			mittelpunktY += 15;
+		mittelpunktY += 15;
 	}
 
 	@Override
@@ -69,8 +67,10 @@ public class Kreis implements TetrominoSpielstein {
 
 	@Override
 	public List<ViertelBlock> getViertelBloecke() {
-		// TODO Auto-generated method stub
-		return null;
+
+		ViertelBlock viertelBlock = new ViertelBlock(mittelpunktX, mittelpunktY);
+
+		return Arrays.asList(viertelBlock);
 	}
 
 	@Override
