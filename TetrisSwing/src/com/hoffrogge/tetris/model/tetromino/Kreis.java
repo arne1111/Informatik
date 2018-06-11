@@ -54,7 +54,7 @@ public class Kreis implements TetrominoSpielstein {
 	}
 
 	@Override
-	public boolean faelltAuf(ViertelBlock block) {
+	public boolean faelltAuf(TetrominoSpielstein block) {
 		// TODO Auto-generated method stub
 		return false;
 	}
@@ -66,11 +66,8 @@ public class Kreis implements TetrominoSpielstein {
 	}
 
 	@Override
-	public List<ViertelBlock> getViertelBloecke() {
-
-		ViertelBlock viertelBlock = new ViertelBlock(mittelpunktX, mittelpunktY);
-
-		return Arrays.asList(viertelBlock);
+	public List<TetrominoSpielstein> getViertelBloecke() {
+		return Arrays.asList(this);
 	}
 
 	@Override

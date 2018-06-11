@@ -167,7 +167,7 @@ public class ViertelBlock implements TetrominoSpielstein {
 	}
 
 	@Override
-	public boolean faelltAuf(ViertelBlock block) {
+	public boolean faelltAuf(TetrominoSpielstein block) {
 		throw new IllegalStateException("Ein Viertelblock darf nicht mehr fallen!");
 	}
 
@@ -177,7 +177,7 @@ public class ViertelBlock implements TetrominoSpielstein {
 	}
 
 	@Override
-	public List<ViertelBlock> getViertelBloecke() {
+	public List<TetrominoSpielstein> getViertelBloecke() {
 		throw new IllegalStateException("Ein Viertelblock darf nicht mehr aufgeteilt werden!");
 	}
 }

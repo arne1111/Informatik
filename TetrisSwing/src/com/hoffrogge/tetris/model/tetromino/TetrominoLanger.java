@@ -30,9 +30,9 @@ public class TetrominoLanger extends Tetromino {
 		if (viertelBloecke.size() != 4)
 			throw new IllegalStateException("Der Tetromino hat keine vier Bloecke!");
 
-		ViertelBlock ersterBlock = viertelBloecke.get(0);
-		ViertelBlock dritterBlock = viertelBloecke.get(2);
-		ViertelBlock vierterBlock = viertelBloecke.get(3);
+		TetrominoSpielstein ersterBlock = viertelBloecke.get(0);
+		TetrominoSpielstein dritterBlock = viertelBloecke.get(2);
+		TetrominoSpielstein vierterBlock = viertelBloecke.get(3);
 
 		boolean senkrecht = ersterBlock.getX() == vierterBlock.getX();
 

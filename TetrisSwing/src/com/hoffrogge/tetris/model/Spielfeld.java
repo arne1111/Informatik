@@ -12,18 +12,15 @@ import java.util.Map.Entry;
 import java.util.concurrent.CopyOnWriteArrayList;
 
 import com.hoffrogge.tetris.logik.Spiel;
-import com.hoffrogge.tetris.model.tetromino.Quadrat;
-import com.hoffrogge.tetris.model.tetromino.TetrominoFactory;
 import com.hoffrogge.tetris.model.tetromino.TetrominoSpielstein;
 import com.hoffrogge.tetris.model.tetromino.TetrominoTyp;
-import com.hoffrogge.tetris.model.tetromino.ViertelBlock;
 
 @SuppressWarnings("serial")
 public class Spielfeld extends Canvas {
 
 	private transient TetrominoSpielstein fallenderSpielstein;
 	private TetrominoTyp naechsterSpielsteinTyp;
-	private List<ViertelBlock> gefalleneSteine;
+	private List<TetrominoSpielstein> gefalleneSteine;
 	private Spiel spiel;
 
 	public Spielfeld() {
@@ -56,7 +53,7 @@ public class Spielfeld extends Canvas {
 
 			if (hatFallenderSteinBodenErreicht() || faelltFallenderSteinAufAnderenStein()) {
 
-				List<ViertelBlock> viertelBloecke = fallenderSpielstein.getViertelBloecke();
+				List<TetrominoSpielstein> viertelBloecke = fallenderSpielstein.getViertelBloecke();
 
 				if (viertelBloecke != null)
 					gefalleneSteine.addAll(viertelBloecke);
@@ -71,17 +68,7 @@ public class Spielfeld extends Canvas {
 	/* Baut hier eure eigenen Spielsteine ein */
 	private TetrominoSpielstein neuerZufaelligerSpielstein() {
 
-		/* bei Spielstart gibt es noch keinen naechsten Stein */
-		if (naechsterSpielsteinTyp == null)
-			naechsterSpielsteinTyp = TetrominoFactory.erstelleZufaelligenTetrominoTyp();
-
-		TetrominoSpielstein tetromino = TetrominoFactory.erstelleTetromino(naechsterSpielsteinTyp);
-
-		naechsterSpielsteinTyp = TetrominoFactory.erstelleZufaelligenTetrominoTyp();
-
-		// return tetromino;
-
-		return new Quadrat();
+		return null;
 	}
 
 	public void darstellen() {
@@ -156,7 +143,7 @@ public class Spielfeld extends Canvas {
 		if (gefalleneSteine.isEmpty())
 			return false;
 
-		for (ViertelBlock block : gefalleneSteine)
+		for (TetrominoSpielstein block : gefalleneSteine)
 			if (fallenderSpielstein.faelltAuf(block))
 				return true;
 
@@ -167,11 +154,11 @@ public class Spielfeld extends Canvas {
 
 		Collections.sort(gefalleneSteine);
 
-		Map<Integer, List<ViertelBlock>> bloeckeProReihe = new HashMap<>();
+		Map<Integer, List<TetrominoSpielstein>> bloeckeProReihe = new HashMap<>();
 
-		for (ViertelBlock block : gefalleneSteine) {
+		for (TetrominoSpielstein block : gefalleneSteine) {
 
-			List<ViertelBlock> blockListe = bloeckeProReihe.get(block.getY());
+			List<TetrominoSpielstein> blockListe = bloeckeProReihe.get(block.getY());
 
 			if (blockListe == null)
 				blockListe = new ArrayList<>();
@@ -181,27 +168,27 @@ public class Spielfeld extends Canvas {
 			bloeckeProReihe.put(block.getY(), blockListe);
 		}
 
-		for (Entry<Integer, List<ViertelBlock>> reihe : bloeckeProReihe.entrySet()) {
+		for (Entry<Integer, List<TetrominoSpielstein>> reihe : bloeckeProReihe.entrySet()) {
 
-			List<ViertelBlock> blockListe = reihe.getValue();
+			List<TetrominoSpielstein> blockListe = reihe.getValue();
 
 			if (blockListe.size() == TetrisKonstanten.SPIELFELD_BREITE / TetrisKonstanten.BLOCK_BREITE)
 				loescheReihe(blockListe);
 		}
 	}
 
-	private void loescheReihe(List<ViertelBlock> blockListe) {
+	private void loescheReihe(List<TetrominoSpielstein> blockListe) {
 
 		int hoehe = 0;
 
-		for (ViertelBlock block : blockListe) {
+		for (TetrominoSpielstein block : blockListe) {
 
 			block.setFuellFarbe(new Farbe(255, 60, 255));
 			gefalleneSteine.remove(block);
 			hoehe = block.getY();
 		}
 
-		for (ViertelBlock block : gefalleneSteine)
+		for (TetrominoSpielstein block : gefalleneSteine)
 			if (block.getY() < hoehe)
 				block.bewegeNachUnten();
 

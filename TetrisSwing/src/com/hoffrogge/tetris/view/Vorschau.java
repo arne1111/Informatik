@@ -8,7 +8,6 @@ import com.hoffrogge.tetris.model.TetrisKonstanten;
 import com.hoffrogge.tetris.model.tetromino.TetrominoFactory;
 import com.hoffrogge.tetris.model.tetromino.TetrominoSpielstein;
 import com.hoffrogge.tetris.model.tetromino.TetrominoTyp;
-import com.hoffrogge.tetris.model.tetromino.ViertelBlock;
 
 @SuppressWarnings("serial")
 public class Vorschau extends Canvas {
@@ -73,10 +72,10 @@ public class Vorschau extends Canvas {
 				throw new IllegalStateException("TetrominoTyp " + naechsterSpielsteinTyp + " ist nicht bekannt!");
 			}
 
-			TetrominoSpielstein naechsterSpielstein = TetrominoFactory.erstelleTetromino(naechsterSpielsteinTyp, xKoordinate,
-					yKoordinate);
+			TetrominoSpielstein naechsterSpielstein = TetrominoFactory.erstelleTetromino(naechsterSpielsteinTyp,
+					xKoordinate, yKoordinate);
 
-			for (ViertelBlock block : naechsterSpielstein.getViertelBloecke())
+			for (TetrominoSpielstein block : naechsterSpielstein.getViertelBloecke())
 				block.setFuellFarbe(FUELL_FARBE);
 
 			naechsterSpielstein.zeichnen(g);

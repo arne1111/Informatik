@@ -1,6 +1,7 @@
 package com.hoffrogge.tetris.model.tetromino;
 
 import java.awt.Graphics;
+import java.util.Arrays;
 import java.util.List;
 
 import com.hoffrogge.tetris.model.Farbe;
@@ -97,30 +98,23 @@ public class Quadrat implements TetrominoSpielstein {
 
 	@Override
 	public void bewegeNachUnten() {
-
-		Punkt mittelPunkt = getMittelPunkt();
-		int y = mittelPunkt.getY();
-		int x = mittelPunkt.getX();
-
-		setMittelpunkt(x, y + 10);
+		mittelpunktY += 50;
 	}
 
 	@Override
 	public void bewegeNachRechts() {
-		// TODO Auto-generated method stub
-
+		mittelpunktX += 50;
 	}
 
 	@Override
 	public void bewegeNachLinks() {
-		// TODO Auto-generated method stub
-
+		mittelpunktX -= 50;
 	}
 
 	@Override
-	public boolean faelltAuf(ViertelBlock block) {
-		// TODO Auto-generated method stub
-		return false;
+	public boolean faelltAuf(TetrominoSpielstein block) {
+
+		return (mittelpunktX == block.getX() && (mittelpunktY + durchmesser) == block.getY());
 	}
 
 	@Override
@@ -130,9 +124,8 @@ public class Quadrat implements TetrominoSpielstein {
 	}
 
 	@Override
-	public List<ViertelBlock> getViertelBloecke() {
-		// TODO Auto-generated method stub
-		return null;
+	public List<TetrominoSpielstein> getViertelBloecke() {
+		return Arrays.asList(this);
 	}
 
 	@Override
@@ -161,8 +154,7 @@ public class Quadrat implements TetrominoSpielstein {
 
 	@Override
 	public int getX() {
-		// TODO Auto-generated method stub
-		return 0;
+		return mittelpunktX;
 	}
 
 	@Override
@@ -173,8 +165,7 @@ public class Quadrat implements TetrominoSpielstein {
 
 	@Override
 	public int getY() {
-		// TODO Auto-generated method stub
-		return 0;
+		return mittelpunktY;
 	}
 
 	@Override

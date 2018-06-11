@@ -23,7 +23,7 @@ public class TetrominoBlock extends Tetromino {
 		viertelBloecke.add(new ViertelBlock(x, y + kantenLaengeViertelBlock));
 		viertelBloecke.add(new ViertelBlock(x + kantenLaengeViertelBlock, y + kantenLaengeViertelBlock));
 
-		for (ViertelBlock block : viertelBloecke)
+		for (TetrominoSpielstein block : viertelBloecke)
 			block.setFuellFarbe(TetrisKonstanten.TETROMINO_FARBE_BLOCK);
 	}
 

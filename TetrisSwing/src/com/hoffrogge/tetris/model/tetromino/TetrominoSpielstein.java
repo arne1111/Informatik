@@ -29,11 +29,11 @@ public interface TetrominoSpielstein extends GeometrischeFigur, Comparable<Tetro
 
 	void bewegeNachLinks();
 
-	boolean faelltAuf(ViertelBlock block);
+	boolean faelltAuf(TetrominoSpielstein block);
 
 	void rotiereNachLinks();
 
-	List<ViertelBlock> getViertelBloecke();
+	List<TetrominoSpielstein> getViertelBloecke();
 
 	Farbe getFuellFarbe();
 
