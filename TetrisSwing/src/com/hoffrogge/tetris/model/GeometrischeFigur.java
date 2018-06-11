@@ -10,6 +10,8 @@ public interface GeometrischeFigur {
 
 	void setDurchmesser(int d);
 
+	Farbe getLinienFarbe();
+
 	void setLinienFarbe(Farbe farbe);
 
 	void zeichnen(Graphics graphics);

@@ -12,6 +12,8 @@ import java.util.Map.Entry;
 import java.util.concurrent.CopyOnWriteArrayList;
 
 import com.hoffrogge.tetris.logik.Spiel;
+import com.hoffrogge.tetris.model.tetromino.Quadrat;
+import com.hoffrogge.tetris.model.tetromino.TetrominoFactory;
 import com.hoffrogge.tetris.model.tetromino.TetrominoSpielstein;
 import com.hoffrogge.tetris.model.tetromino.TetrominoTyp;
 import com.hoffrogge.tetris.model.tetromino.ViertelBlock;
@@ -69,7 +71,17 @@ public class Spielfeld extends Canvas {
 	/* Baut hier eure eigenen Spielsteine ein */
 	private TetrominoSpielstein neuerZufaelligerSpielstein() {
 
-		return null;
+		/* bei Spielstart gibt es noch keinen naechsten Stein */
+		if (naechsterSpielsteinTyp == null)
+			naechsterSpielsteinTyp = TetrominoFactory.erstelleZufaelligenTetrominoTyp();
+
+		TetrominoSpielstein tetromino = TetrominoFactory.erstelleTetromino(naechsterSpielsteinTyp);
+
+		naechsterSpielsteinTyp = TetrominoFactory.erstelleZufaelligenTetrominoTyp();
+
+		// return tetromino;
+
+		return new Quadrat();
 	}
 
 	public void darstellen() {
@@ -89,6 +101,7 @@ public class Spielfeld extends Canvas {
 
 				for (GeometrischeFigur gefallenerStein : gefalleneSteine)
 					gefallenerStein.zeichnen(g);
+
 			} else {
 				zeichnePauseSchriftzug(g);
 			}

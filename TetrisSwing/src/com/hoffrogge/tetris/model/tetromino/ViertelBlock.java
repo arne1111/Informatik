@@ -8,7 +8,7 @@ import com.hoffrogge.tetris.model.Farbe;
 import com.hoffrogge.tetris.model.Punkt;
 import com.hoffrogge.tetris.model.TetrisKonstanten;
 
-public class ViertelBlock implements TetrominoSpielstein, Comparable<ViertelBlock> {
+public class ViertelBlock implements TetrominoSpielstein {
 
 	private int x;
 	private int y;
@@ -49,30 +49,37 @@ public class ViertelBlock implements TetrominoSpielstein, Comparable<ViertelBloc
 		this.linienFarbe = farbe;
 	}
 
+	@Override
 	public Farbe getLinienFarbe() {
 		return linienFarbe;
 	}
 
+	@Override
 	public Farbe getFuellFarbe() {
 		return fuellFarbe;
 	}
 
+	@Override
 	public void setFuellFarbe(Farbe fuellFarbe) {
 		this.fuellFarbe = fuellFarbe;
 	}
 
+	@Override
 	public int getX() {
 		return x;
 	}
 
+	@Override
 	public void setX(int x) {
 		this.x = x;
 	}
 
+	@Override
 	public int getY() {
 		return y;
 	}
 
+	@Override
 	public void setY(int y) {
 		this.y = y;
 	}
@@ -115,10 +122,11 @@ public class ViertelBlock implements TetrominoSpielstein, Comparable<ViertelBloc
 	}
 
 	@Override
-	public int compareTo(ViertelBlock o) {
+	public int compareTo(TetrominoSpielstein o) {
 		return this.getX() - o.getX();
 	}
 
+	@Override
 	public void bewegeNachUnten() {
 		y += TetrisKonstanten.TETROMINO_FALL_HOEHE;
 	}
@@ -150,31 +158,26 @@ public class ViertelBlock implements TetrominoSpielstein, Comparable<ViertelBloc
 
 	@Override
 	public void bewegeNachRechts() {
-		// TODO Auto-generated method stub
-		
+		throw new IllegalStateException("Ein Viertelblock darf nicht mehr bewegt werden!");
 	}
 
 	@Override
 	public void bewegeNachLinks() {
-		// TODO Auto-generated method stub
-		
+		throw new IllegalStateException("Ein Viertelblock darf nicht mehr bewegt werden!");
 	}
 
 	@Override
 	public boolean faelltAuf(ViertelBlock block) {
-		// TODO Auto-generated method stub
-		return false;
+		throw new IllegalStateException("Ein Viertelblock darf nicht mehr fallen!");
 	}
 
 	@Override
 	public void rotiereNachLinks() {
-		// TODO Auto-generated method stub
-		
+		throw new IllegalStateException("Ein Viertelblock darf nicht mehr rotiert werden!");
 	}
 
 	@Override
 	public List<ViertelBlock> getViertelBloecke() {
-		// TODO Auto-generated method stub
-		return null;
+		throw new IllegalStateException("Ein Viertelblock darf nicht mehr aufgeteilt werden!");
 	}
 }

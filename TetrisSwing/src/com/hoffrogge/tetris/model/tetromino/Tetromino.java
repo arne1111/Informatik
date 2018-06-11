@@ -32,13 +32,55 @@ public abstract class Tetromino implements TetrominoSpielstein {
 	}
 
 	@Override
+	public int getX() {
+		return x;
+	}
+
+	@Override
+	public void setX(int x) {
+		this.x = x;
+	}
+
+	@Override
+	public int getY() {
+		return y;
+	}
+
+	@Override
+	public void setY(int y) {
+		this.y = y;
+	}
+
+	@Override
 	public void setDurchmesser(int d) {
 		this.durchmesser = d;
 	}
 
 	@Override
+	public Farbe getLinienFarbe() {
+		return linienFarbe;
+	}
+
+	@Override
 	public void setLinienFarbe(Farbe farbe) {
 		this.linienFarbe = farbe;
+	}
+
+	@Override
+	public Farbe getFuellFarbe() {
+
+		if (viertelBloecke.isEmpty())
+			throw new IllegalStateException(
+					"Der Tetromino wurde aufgeteilt, es kann keine Fuellfarbe mehr bestimmt werden!");
+
+		return viertelBloecke.get(0).getFuellFarbe();
+	}
+
+	@Override
+	public void setFuellFarbe(Farbe farbe) {
+
+		for (ViertelBlock block : viertelBloecke)
+			block.setFuellFarbe(farbe);
 	}
 
 	@Override
@@ -280,5 +322,33 @@ public abstract class Tetromino implements TetrominoSpielstein {
 	@Override
 	public List<ViertelBlock> getViertelBloecke() {
 		return viertelBloecke;
+	}
+
+	@Override
+	public int compareTo(TetrominoSpielstein andererSpielstein) {
+
+		/*
+		 * Jeder Spielstein besteht aus genau vier ViertelBloecken, daher sind zwei
+		 * Spielsteine gleich, wenn jeder der vier ViertelBloecke seinem Pendant im
+		 * anderen Tetromino gleicht.
+		 */
+		List<ViertelBlock> andereViertelBloecke = andererSpielstein.getViertelBloecke();
+
+		for (ViertelBlock block : viertelBloecke) {
+
+			block.setLinienFarbe(linienFarbe);
+		}
+
+		/* Es muss jeweils genau vier geben! */
+		if (viertelBloecke.size() != 4 || andereViertelBloecke.size() != 4)
+			throw new IllegalStateException("Die Spielsteine sind kaputt! Der Spielstein hat " + viertelBloecke.size()
+					+ " ViertelBloecke, aber der Vergleichsstein hat " + andereViertelBloecke.size());
+
+		int compareResult = 0;
+
+		for (int i = 0; i < 4; i++)
+			compareResult = viertelBloecke.get(i).compareTo(andereViertelBloecke.get(i));
+
+		return compareResult;
 	}
 }

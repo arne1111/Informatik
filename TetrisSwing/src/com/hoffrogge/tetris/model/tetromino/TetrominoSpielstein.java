@@ -2,9 +2,10 @@ package com.hoffrogge.tetris.model.tetromino;
 
 import java.util.List;
 
+import com.hoffrogge.tetris.model.Farbe;
 import com.hoffrogge.tetris.model.GeometrischeFigur;
 
-public interface TetrominoSpielstein extends GeometrischeFigur {
+public interface TetrominoSpielstein extends GeometrischeFigur, Comparable<TetrominoSpielstein> {
 
 	int getHoechstesY();
 
@@ -13,6 +14,14 @@ public interface TetrominoSpielstein extends GeometrischeFigur {
 	int getKanteLinksX();
 
 	int getKanteRechtsX();
+
+	int getX();
+
+	void setX(int x);
+
+	int getY();
+
+	void setY(int y);
 
 	void bewegeNachUnten();
 
@@ -25,4 +34,8 @@ public interface TetrominoSpielstein extends GeometrischeFigur {
 	void rotiereNachLinks();
 
 	List<ViertelBlock> getViertelBloecke();
+
+	Farbe getFuellFarbe();
+
+	void setFuellFarbe(Farbe farbe);
 }

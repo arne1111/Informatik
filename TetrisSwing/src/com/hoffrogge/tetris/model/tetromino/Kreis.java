@@ -105,4 +105,52 @@ public class Kreis implements TetrominoSpielstein {
 		graphics.fillOval(mittelpunktX, mittelpunktY, 100, 100);
 
 	}
+
+	@Override
+	public Farbe getLinienFarbe() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public Farbe getFuellFarbe() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public void setFuellFarbe(Farbe farbe) {
+		// TODO Auto-generated method stub
+
+	}
+
+	@Override
+	public int compareTo(TetrominoSpielstein o) {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+	@Override
+	public int getX() {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+	@Override
+	public void setX(int x) {
+		// TODO Auto-generated method stub
+
+	}
+
+	@Override
+	public int getY() {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+	@Override
+	public void setY(int y) {
+		// TODO Auto-generated method stub
+
+	}
 }
