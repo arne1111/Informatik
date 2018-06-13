@@ -1,5 +1,12 @@
 package com.hoffrogge.tetris.logik;
 
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -30,6 +37,7 @@ public class Spiel implements Runnable {
 
 	private int level = 1;
 	private int punkte = 0;
+	private int highscore = 0;
 	private int reihen = 0;
 	private boolean isPause;
 
@@ -69,8 +77,11 @@ public class Spiel implements Runnable {
 			spielfeld.darstellen();
 			vorschau.darstellen();
 
-			if (spielfeld.istSpielfeldVoll())
+			if (spielfeld.istSpielfeldVoll()) {
+
 				beendeSpiel();
+				continue;
+			}
 
 			try {
 
@@ -82,7 +93,7 @@ public class Spiel implements Runnable {
 				Thread.sleep(spielGeschwindigkeit);
 
 			} catch (InterruptedException e) {
-				Logger.getGlobal().log(Level.OFF, e.getMessage(), e);
+				Logger.getGlobal().log(Level.SEVERE, e.getMessage(), e);
 				Thread.currentThread().interrupt();
 			}
 		}
@@ -90,6 +101,8 @@ public class Spiel implements Runnable {
 	}
 
 	public void starteSpiel() {
+
+		highscoreLaden();
 
 		spielThread = new Thread(this);
 		spielThread.start();
@@ -101,21 +114,21 @@ public class Spiel implements Runnable {
 		}
 	}
 
-	public void beendeSpiel() {
+	private void beendeSpiel() {
 
 		spielLaeuft = false;
 
 		try {
 
-			spielThread.join();
-
 			if (TetrisKonstanten.MUSIK_AN)
 				soundThread.join();
 
 		} catch (InterruptedException e) {
-			Logger.getGlobal().log(Level.OFF, e.getMessage(), e);
+			Logger.getGlobal().log(Level.SEVERE, e.getMessage(), e);
 			Thread.currentThread().interrupt();
 		}
+
+		highscoreSpeichern();
 	}
 
 	public void erhoehePunkte() {
@@ -144,8 +157,58 @@ public class Spiel implements Runnable {
 		punkteWertLabel.setText(String.valueOf(punkte));
 		reihenWertLabel.setText(String.valueOf(reihen));
 
-		int highscore = Math.max(punkte, 0);
+		highscore = Math.max(punkte, highscore);
 		highscoreLabel.setText(String.valueOf(highscore));
+	}
+
+	private void highscoreSpeichern() {
+
+		File highscoreCsv = new File("highscore.csv");
+
+		if (!highscoreCsv.exists()) {
+
+			try {
+				highscoreCsv.createNewFile();
+			} catch (IOException e) {
+				Logger.getGlobal().log(Level.WARNING, "Highscore-Datei konnte nicht angelegt werden! " + e.getMessage(),
+						e);
+				e.printStackTrace();
+			}
+		}
+
+		try (BufferedWriter bw = new BufferedWriter(new FileWriter("highscore.csv"))) {
+
+			int aktuellerHighscore = Math.max(punkte, highscore);
+			String content = String.valueOf(aktuellerHighscore);
+
+			bw.write(content);
+
+		} catch (IOException e) {
+			Logger.getGlobal().log(Level.WARNING, "Konnte Highscore nicht speichern! " + e.getMessage(), e);
+			e.printStackTrace();
+		}
+	}
+
+	private void highscoreLaden() {
+
+		File highscoreCsv = new File("highscore.csv");
+
+		if (!highscoreCsv.exists())
+			return;
+
+		try (BufferedReader br = new BufferedReader(new FileReader("highscore.csv"))) {
+
+			String line = br.readLine();
+
+			highscore = Integer.parseInt(line);
+
+		} catch (FileNotFoundException e) {
+			Logger.getGlobal().log(Level.WARNING, "Konnte Highscore-Datei nicht finden! " + e.getMessage(), e);
+			e.printStackTrace();
+		} catch (IOException | NumberFormatException e) {
+			Logger.getGlobal().log(Level.WARNING, "Konnte Highscore nicht lesen! " + e.getMessage(), e);
+			e.printStackTrace();
+		}
 	}
 
 	public void togglePause() {
