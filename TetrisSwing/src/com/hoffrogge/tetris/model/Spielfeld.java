@@ -12,6 +12,7 @@ import java.util.Map.Entry;
 import java.util.concurrent.CopyOnWriteArrayList;
 
 import com.hoffrogge.tetris.logik.Spiel;
+import com.hoffrogge.tetris.model.tetromino.TetrominoFactory;
 import com.hoffrogge.tetris.model.tetromino.TetrominoSpielstein;
 import com.hoffrogge.tetris.model.tetromino.TetrominoTyp;
 
@@ -19,7 +20,7 @@ import com.hoffrogge.tetris.model.tetromino.TetrominoTyp;
 public class Spielfeld extends Canvas {
 
 	private transient TetrominoSpielstein fallenderSpielstein;
-	private TetrominoTyp naechsterSpielsteinTyp;
+	private TetrominoTyp naechsterSpielsteinTyp = TetrominoFactory.erstelleZufaelligenTetrominoTyp();
 	private List<TetrominoSpielstein> gefalleneSteine;
 	private Spiel spiel;
 
@@ -68,7 +69,11 @@ public class Spielfeld extends Canvas {
 	/* Baut hier eure eigenen Spielsteine ein */
 	private TetrominoSpielstein neuerZufaelligerSpielstein() {
 
-		return null;
+		TetrominoSpielstein tetromino = TetrominoFactory.erstelleTetromino(naechsterSpielsteinTyp);
+
+		naechsterSpielsteinTyp = TetrominoFactory.erstelleZufaelligenTetrominoTyp();
+
+		return tetromino;
 	}
 
 	public void darstellen() {
