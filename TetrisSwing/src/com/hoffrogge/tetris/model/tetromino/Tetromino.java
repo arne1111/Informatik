@@ -10,345 +10,345 @@ import com.hoffrogge.tetris.model.TetrisKonstanten;
 
 public abstract class Tetromino implements TetrominoSpielstein {
 
-	int durchmesser;
-	int x;
-	int y;
+    int                                 durchmesser;
+    int                                 x;
+    int                                 y;
 
-	Farbe linienFarbe;
+    Farbe                               linienFarbe;
 
-	protected List<TetrominoSpielstein> viertelBloecke = new ArrayList<>(4);
+    protected List<TetrominoSpielstein> viertelBloecke = new ArrayList<>(4);
 
-	/* Methoden aus GeometrischeFigur */
+    /* Methoden aus GeometrischeFigur */
 
-	@Override
-	public void setMittelpunkt(int x, int y) {
-		this.x = x;
-		this.y = y;
-	}
+    @Override
+    public void setMittelpunkt(Punkt mittelpunkt) {
+        this.x = mittelpunkt.getX();
+        this.y = mittelpunkt.getY();
+    }
 
-	@Override
-	public Punkt getMittelPunkt() {
-		return new Punkt(x, y);
-	}
+    @Override
+    public Punkt getMittelPunkt() {
+        return new Punkt(x, y);
+    }
 
-	@Override
-	public int getX() {
-		return x;
-	}
+    @Override
+    public int getX() {
+        return x;
+    }
 
-	@Override
-	public void setX(int x) {
-		this.x = x;
-	}
+    @Override
+    public void setX(int x) {
+        this.x = x;
+    }
 
-	@Override
-	public int getY() {
-		return y;
-	}
+    @Override
+    public int getY() {
+        return y;
+    }
 
-	@Override
-	public void setY(int y) {
-		this.y = y;
-	}
+    @Override
+    public void setY(int y) {
+        this.y = y;
+    }
 
-	@Override
-	public void setDurchmesser(int d) {
-		this.durchmesser = d;
-	}
+    @Override
+    public void setDurchmesser(int d) {
+        this.durchmesser = d;
+    }
 
-	@Override
-	public Farbe getLinienFarbe() {
-		return linienFarbe;
-	}
+    @Override
+    public Farbe getLinienFarbe() {
+        return linienFarbe;
+    }
 
-	@Override
-	public void setLinienFarbe(Farbe farbe) {
-		this.linienFarbe = farbe;
-	}
+    @Override
+    public void setLinienFarbe(Farbe farbe) {
+        this.linienFarbe = farbe;
+    }
 
-	@Override
-	public Farbe getFuellFarbe() {
+    @Override
+    public Farbe getFuellFarbe() {
 
-		if (viertelBloecke.isEmpty())
-			throw new IllegalStateException(
-					"Der Tetromino wurde aufgeteilt, es kann keine Fuellfarbe mehr bestimmt werden!");
+        if (viertelBloecke.isEmpty())
+            throw new IllegalStateException(
+                    "Der Tetromino wurde aufgeteilt, es kann keine Fuellfarbe mehr bestimmt werden!");
 
-		return viertelBloecke.get(0).getFuellFarbe();
-	}
+        return viertelBloecke.get(0).getFuellFarbe();
+    }
 
-	@Override
-	public void setFuellFarbe(Farbe farbe) {
+    @Override
+    public void setFuellFarbe(Farbe farbe) {
 
-		for (TetrominoSpielstein block : viertelBloecke)
-			block.setFuellFarbe(farbe);
-	}
+        for (TetrominoSpielstein block : viertelBloecke)
+            block.setFuellFarbe(farbe);
+    }
 
-	@Override
-	public void zeichnen(Graphics graphics) {
+    @Override
+    public void zeichnen(Graphics graphics) {
 
-		if (graphics == null)
-			return;
+        if (graphics == null)
+            return;
 
-		zeichneViertelBloecke(graphics);
-	}
+        zeichneViertelBloecke(graphics);
+    }
 
-	private void zeichneViertelBloecke(Graphics graphics) {
+    private void zeichneViertelBloecke(Graphics graphics) {
 
-		if (viertelBloecke.isEmpty())
-			return;
+        if (viertelBloecke.isEmpty())
+            return;
 
-		if (linienFarbe == null)
-			linienFarbe = new Farbe(0, 0, 0);
+        if (linienFarbe == null)
+            linienFarbe = new Farbe(0, 0, 0);
 
-		Farbe fuellFarbe = viertelBloecke.get(0).getFuellFarbe();
+        Farbe fuellFarbe = viertelBloecke.get(0).getFuellFarbe();
 
-		for (TetrominoSpielstein block : viertelBloecke) {
+        for (TetrominoSpielstein block : viertelBloecke) {
 
-			block.setLinienFarbe(linienFarbe);
-			block.setFuellFarbe(fuellFarbe);
-			block.zeichnen(graphics);
-		}
-	}
+            block.setLinienFarbe(linienFarbe);
+            block.setFuellFarbe(fuellFarbe);
+            block.zeichnen(graphics);
+        }
+    }
 
-	/* Methoden aus TetrominoGeometrie */
+    /* Methoden aus TetrominoGeometrie */
 
-	@Override
-	public int getHoechstesY() {
+    @Override
+    public int getHoechstesY() {
 
-		int hoechstesY = TetrisKonstanten.SPIELFELD_HOEHE;
+        int hoechstesY = TetrisKonstanten.SPIELFELD_HOEHE;
 
-		for (TetrominoSpielstein block : viertelBloecke)
-			if (block.getHoechstesY() < hoechstesY)
-				hoechstesY = block.getHoechstesY();
+        for (TetrominoSpielstein block : viertelBloecke)
+            if (block.getHoechstesY() < hoechstesY)
+                hoechstesY = block.getHoechstesY();
 
-		return hoechstesY;
-	}
+        return hoechstesY;
+    }
 
-	@Override
-	public int getTiefstesY() {
+    @Override
+    public int getTiefstesY() {
 
-		int tiefstesY = 0;
+        int tiefstesY = 0;
 
-		for (TetrominoSpielstein block : viertelBloecke)
-			if (block.getTiefstesY() > tiefstesY)
-				tiefstesY = block.getTiefstesY();
+        for (TetrominoSpielstein block : viertelBloecke)
+            if (block.getTiefstesY() > tiefstesY)
+                tiefstesY = block.getTiefstesY();
 
-		return tiefstesY;
-	}
+        return tiefstesY;
+    }
 
-	@Override
-	public int getKanteLinksX() {
+    @Override
+    public int getKanteLinksX() {
 
-		int kanteLinksX = TetrisKonstanten.SPIELFELD_BREITE;
+        int kanteLinksX = TetrisKonstanten.SPIELFELD_BREITE;
 
-		for (TetrominoSpielstein block : viertelBloecke)
-			if (block.getKanteLinksX() < kanteLinksX)
-				kanteLinksX = block.getKanteLinksX();
+        for (TetrominoSpielstein block : viertelBloecke)
+            if (block.getKanteLinksX() < kanteLinksX)
+                kanteLinksX = block.getKanteLinksX();
 
-		return kanteLinksX;
-	}
+        return kanteLinksX;
+    }
 
-	@Override
-	public int getKanteRechtsX() {
+    @Override
+    public int getKanteRechtsX() {
 
-		int kanteRechtsX = 0;
+        int kanteRechtsX = 0;
 
-		for (TetrominoSpielstein block : viertelBloecke)
-			if (block.getKanteRechtsX() > kanteRechtsX)
-				kanteRechtsX = block.getKanteRechtsX();
+        for (TetrominoSpielstein block : viertelBloecke)
+            if (block.getKanteRechtsX() > kanteRechtsX)
+                kanteRechtsX = block.getKanteRechtsX();
 
-		return kanteRechtsX;
-	}
+        return kanteRechtsX;
+    }
 
-	@Override
-	public void bewegeNachUnten() {
+    @Override
+    public void bewegeNachUnten() {
 
-		if (viertelBloecke.isEmpty())
-			return;
+        if (viertelBloecke.isEmpty())
+            return;
 
-		for (TetrominoSpielstein block : viertelBloecke)
-			block.setY(block.getY() + TetrisKonstanten.TETROMINO_FALL_HOEHE);
-	}
+        for (TetrominoSpielstein block : viertelBloecke)
+            block.setY(block.getY() + TetrisKonstanten.TETROMINO_FALL_HOEHE);
+    }
 
-	@Override
-	public void bewegeNachRechts() {
+    @Override
+    public void bewegeNachRechts() {
 
-		if (viertelBloecke.isEmpty())
-			return;
+        if (viertelBloecke.isEmpty())
+            return;
 
-		if (getKanteRechtsX() == TetrisKonstanten.SPIELFELD_BREITE)
-			return;
+        if (getKanteRechtsX() == TetrisKonstanten.SPIELFELD_BREITE)
+            return;
 
-		for (TetrominoSpielstein block : viertelBloecke) {
+        for (TetrominoSpielstein block : viertelBloecke) {
 
-			int neuesBlockX = block.getX() + TetrisKonstanten.BLOCK_BREITE;
+            int neuesBlockX = block.getX() + TetrisKonstanten.BLOCK_BREITE;
 
-			if (neuesBlockX <= TetrisKonstanten.SPIELFELD_BREITE)
-				block.setX(neuesBlockX);
-		}
-	}
+            if (neuesBlockX <= TetrisKonstanten.SPIELFELD_BREITE)
+                block.setX(neuesBlockX);
+        }
+    }
 
-	@Override
-	public void bewegeNachLinks() {
+    @Override
+    public void bewegeNachLinks() {
 
-		if (viertelBloecke.isEmpty())
-			return;
+        if (viertelBloecke.isEmpty())
+            return;
 
-		if (getKanteLinksX() == 0)
-			return;
+        if (getKanteLinksX() == 0)
+            return;
 
-		for (TetrominoSpielstein block : viertelBloecke) {
+        for (TetrominoSpielstein block : viertelBloecke) {
 
-			int neuesBlockX = block.getX() - TetrisKonstanten.BLOCK_BREITE;
+            int neuesBlockX = block.getX() - TetrisKonstanten.BLOCK_BREITE;
 
-			if (neuesBlockX >= 0)
-				block.setX(neuesBlockX);
-		}
-	}
+            if (neuesBlockX >= 0)
+                block.setX(neuesBlockX);
+        }
+    }
 
-	@Override
-	public boolean faelltAuf(TetrominoSpielstein block) {
+    @Override
+    public boolean faelltAuf(TetrominoSpielstein block) {
 
-		if (viertelBloecke.isEmpty())
-			return false;
+        if (viertelBloecke.isEmpty())
+            return false;
 
-		for (TetrominoSpielstein fallenderBlock : viertelBloecke)
-			if (fallenderBlock.getX() == block.getX() && fallenderBlock.getTiefstesY() == block.getHoechstesY())
-				return true;
+        for (TetrominoSpielstein fallenderBlock : viertelBloecke)
+            if (fallenderBlock.getX() == block.getX() && fallenderBlock.getTiefstesY() == block.getHoechstesY())
+                return true;
 
-		return false;
-	}
+        return false;
+    }
 
-	/* gegen den Uhrzeigersinn */
-	@Override
-	public void rotiereNachLinks() {
+    /* gegen den Uhrzeigersinn */
+    @Override
+    public void rotiereNachLinks() {
 
-		if (viertelBloecke.size() != 4)
-			throw new IllegalStateException("Der Tetromino hat keine vier Bloecke!");
+        if (viertelBloecke.size() != 4)
+            throw new IllegalStateException("Der Tetromino hat keine vier Bloecke!");
 
-		TetrominoSpielstein zweiterBlock = viertelBloecke.get(1);
+        TetrominoSpielstein zweiterBlock = viertelBloecke.get(1);
 
-		int xMitte = zweiterBlock.getX();
-		int yMitte = zweiterBlock.getY();
-		int breite = TetrisKonstanten.BLOCK_BREITE;
+        int xMitte = zweiterBlock.getX();
+        int yMitte = zweiterBlock.getY();
+        int breite = TetrisKonstanten.BLOCK_BREITE;
 
-		/* 4x4 Matrix */
-		Punkt[][] tetrominoMatrix = new Punkt[4][4];
+        /* 4x4 Matrix */
+        Punkt[][] tetrominoMatrix = new Punkt[4][4];
 
-		tetrominoMatrix[0][0] = new Punkt(xMitte - breite, yMitte - breite);
-		tetrominoMatrix[0][1] = new Punkt(xMitte, yMitte - breite);
-		tetrominoMatrix[0][2] = new Punkt(xMitte + breite, yMitte - breite);
-		tetrominoMatrix[0][3] = new Punkt(xMitte + breite * 2, yMitte - breite);
+        tetrominoMatrix[0][0] = new Punkt(xMitte - breite, yMitte - breite);
+        tetrominoMatrix[0][1] = new Punkt(xMitte, yMitte - breite);
+        tetrominoMatrix[0][2] = new Punkt(xMitte + breite, yMitte - breite);
+        tetrominoMatrix[0][3] = new Punkt(xMitte + breite * 2, yMitte - breite);
 
-		tetrominoMatrix[1][0] = new Punkt(xMitte - breite, yMitte);
-		tetrominoMatrix[1][1] = new Punkt(xMitte, yMitte);
-		tetrominoMatrix[1][2] = new Punkt(xMitte + breite, yMitte);
-		tetrominoMatrix[1][3] = new Punkt(xMitte + breite * 2, yMitte);
+        tetrominoMatrix[1][0] = new Punkt(xMitte - breite, yMitte);
+        tetrominoMatrix[1][1] = new Punkt(xMitte, yMitte);
+        tetrominoMatrix[1][2] = new Punkt(xMitte + breite, yMitte);
+        tetrominoMatrix[1][3] = new Punkt(xMitte + breite * 2, yMitte);
 
-		tetrominoMatrix[2][0] = new Punkt(xMitte - breite, yMitte + breite);
-		tetrominoMatrix[2][1] = new Punkt(xMitte, yMitte + breite);
-		tetrominoMatrix[2][2] = new Punkt(xMitte + breite, yMitte + breite);
-		tetrominoMatrix[2][3] = new Punkt(xMitte + breite * 2, yMitte + breite);
+        tetrominoMatrix[2][0] = new Punkt(xMitte - breite, yMitte + breite);
+        tetrominoMatrix[2][1] = new Punkt(xMitte, yMitte + breite);
+        tetrominoMatrix[2][2] = new Punkt(xMitte + breite, yMitte + breite);
+        tetrominoMatrix[2][3] = new Punkt(xMitte + breite * 2, yMitte + breite);
 
-		tetrominoMatrix[3][0] = new Punkt(xMitte - breite, yMitte + breite * 2);
-		tetrominoMatrix[3][1] = new Punkt(xMitte, yMitte + breite * 2);
-		tetrominoMatrix[3][2] = new Punkt(xMitte + breite, yMitte + breite * 2);
-		tetrominoMatrix[3][3] = new Punkt(xMitte + breite * 2, yMitte + breite * 2);
+        tetrominoMatrix[3][0] = new Punkt(xMitte - breite, yMitte + breite * 2);
+        tetrominoMatrix[3][1] = new Punkt(xMitte, yMitte + breite * 2);
+        tetrominoMatrix[3][2] = new Punkt(xMitte + breite, yMitte + breite * 2);
+        tetrominoMatrix[3][3] = new Punkt(xMitte + breite * 2, yMitte + breite * 2);
 
-		for (TetrominoSpielstein block : viertelBloecke) {
+        for (TetrominoSpielstein block : viertelBloecke) {
 
-			boolean blockRotiert = false;
+            boolean blockRotiert = false;
 
-			for (int i = 0; i <= 3; i++) {
+            for (int i = 0; i <= 3; i++) {
 
-				if (blockRotiert)
-					break;
+                if (blockRotiert)
+                    break;
 
-				for (int j = 0; j <= 3; j++) {
+                for (int j = 0; j <= 3; j++) {
 
-					if (blockRotiert)
-						break;
+                    if (blockRotiert)
+                        break;
 
-					int xBlock = block.getX();
-					int yBlock = block.getY();
+                    int xBlock = block.getX();
+                    int yBlock = block.getY();
 
-					Punkt punkt = tetrominoMatrix[i][j];
+                    Punkt punkt = tetrominoMatrix[i][j];
 
-					if (punkt.getX() == xBlock && punkt.getY() == yBlock) {
+                    if (punkt.getX() == xBlock && punkt.getY() == yBlock) {
 
-						Punkt neuerPunkt = findePunkt(tetrominoMatrix, i, j);
+                        Punkt neuerPunkt = findePunkt(tetrominoMatrix, i, j);
 
-						if (neuerPunkt == null)
-							throw new IllegalStateException("Punkt nicht gefunden!");
+                        if (neuerPunkt == null)
+                            throw new IllegalStateException("Punkt nicht gefunden!");
 
-						block.setX(neuerPunkt.getX());
-						block.setY(neuerPunkt.getY());
+                        block.setX(neuerPunkt.getX());
+                        block.setY(neuerPunkt.getY());
 
-						blockRotiert = true;
-					}
-				}
-			}
-		}
-	}
+                        blockRotiert = true;
+                    }
+                }
+            }
+        }
+    }
 
-	Punkt findePunkt(Punkt[][] tetrominoMatrix, int i, int j) {
+    Punkt findePunkt(Punkt[][] tetrominoMatrix, int i, int j) {
 
-		Punkt neuerPunkt = null;
+        Punkt neuerPunkt = null;
 
-		if (i == 0 && j == 0)
-			neuerPunkt = tetrominoMatrix[0][2];
-		else if (i == 0 && j == 1)
-			neuerPunkt = tetrominoMatrix[1][2];
-		else if (i == 0 && j == 2)
-			neuerPunkt = tetrominoMatrix[2][2];
+        if (i == 0 && j == 0)
+            neuerPunkt = tetrominoMatrix[0][2];
+        else if (i == 0 && j == 1)
+            neuerPunkt = tetrominoMatrix[1][2];
+        else if (i == 0 && j == 2)
+            neuerPunkt = tetrominoMatrix[2][2];
 
-		else if (i == 1 && j == 0)
-			neuerPunkt = tetrominoMatrix[0][1];
-		else if (i == 1 && j == 1)
-			neuerPunkt = tetrominoMatrix[1][1];
-		else if (i == 1 && j == 2)
-			neuerPunkt = tetrominoMatrix[2][1];
+        else if (i == 1 && j == 0)
+            neuerPunkt = tetrominoMatrix[0][1];
+        else if (i == 1 && j == 1)
+            neuerPunkt = tetrominoMatrix[1][1];
+        else if (i == 1 && j == 2)
+            neuerPunkt = tetrominoMatrix[2][1];
 
-		else if (i == 2 && j == 0)
-			neuerPunkt = tetrominoMatrix[0][0];
-		else if (i == 2 && j == 1)
-			neuerPunkt = tetrominoMatrix[1][0];
-		else if (i == 2 && j == 2)
-			neuerPunkt = tetrominoMatrix[2][0];
+        else if (i == 2 && j == 0)
+            neuerPunkt = tetrominoMatrix[0][0];
+        else if (i == 2 && j == 1)
+            neuerPunkt = tetrominoMatrix[1][0];
+        else if (i == 2 && j == 2)
+            neuerPunkt = tetrominoMatrix[2][0];
 
-		return neuerPunkt;
-	}
+        return neuerPunkt;
+    }
 
-	@Override
-	public List<TetrominoSpielstein> getViertelBloecke() {
-		return viertelBloecke;
-	}
+    @Override
+    public List<TetrominoSpielstein> getViertelBloecke() {
+        return viertelBloecke;
+    }
 
-	@Override
-	public int compareTo(TetrominoSpielstein andererSpielstein) {
+    @Override
+    public int compareTo(TetrominoSpielstein andererSpielstein) {
 
-		/*
-		 * Jeder Spielstein besteht aus genau vier ViertelBloecken, daher sind zwei
-		 * Spielsteine gleich, wenn jeder der vier ViertelBloecke seinem Pendant im
-		 * anderen Tetromino gleicht.
-		 */
-		List<TetrominoSpielstein> andereViertelBloecke = andererSpielstein.getViertelBloecke();
+        /*
+         * Jeder Spielstein besteht aus genau vier ViertelBloecken, daher sind
+         * zwei Spielsteine gleich, wenn jeder der vier ViertelBloecke seinem
+         * Pendant im anderen Tetromino gleicht.
+         */
+        List<TetrominoSpielstein> andereViertelBloecke = andererSpielstein.getViertelBloecke();
 
-		for (TetrominoSpielstein block : viertelBloecke) {
+        for (TetrominoSpielstein block : viertelBloecke) {
 
-			block.setLinienFarbe(linienFarbe);
-		}
+            block.setLinienFarbe(linienFarbe);
+        }
 
-		/* Es muss jeweils genau vier geben! */
-		if (viertelBloecke.size() != 4 || andereViertelBloecke.size() != 4)
-			throw new IllegalStateException("Die Spielsteine sind kaputt! Der Spielstein hat " + viertelBloecke.size()
-					+ " ViertelBloecke, aber der Vergleichsstein hat " + andereViertelBloecke.size());
+        /* Es muss jeweils genau vier geben! */
+        if (viertelBloecke.size() != 4 || andereViertelBloecke.size() != 4)
+            throw new IllegalStateException("Die Spielsteine sind kaputt! Der Spielstein hat " + viertelBloecke.size()
+                    + " ViertelBloecke, aber der Vergleichsstein hat " + andereViertelBloecke.size());
 
-		int compareResult = 0;
+        int compareResult = 0;
 
-		for (int i = 0; i < 4; i++)
-			compareResult = viertelBloecke.get(i).compareTo(andereViertelBloecke.get(i));
+        for (int i = 0; i < 4; i++)
+            compareResult = viertelBloecke.get(i).compareTo(andereViertelBloecke.get(i));
 
-		return compareResult;
-	}
+        return compareResult;
+    }
 }
