@@ -5,13 +5,13 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Random;
 
-public class TetrominoFactory {
+public class StandardTetrominoFactory {
 
 	private static final List<TetrominoTyp> TYPEN = Collections.unmodifiableList(Arrays.asList(TetrominoTyp.values()));
 	private static final int ANZAHL = TYPEN.size();
 	private static final Random ZUFALL = new Random();
 
-	private TetrominoFactory() {
+	private StandardTetrominoFactory() {
 		/* diese Factory hat nur statische Methoden */
 	}
 
