@@ -291,6 +291,12 @@ public abstract class Tetromino implements TetrominoSpielstein {
         }
     }
 
+    /* im Uhrzeigersinn */
+    @Override
+    public void rotiereNachRechts() {
+        throw new UnsupportedOperationException("Rechts herum rotieren wurde noch nicht implementiert!");
+    }
+
     Punkt findePunkt(Punkt[][] tetrominoMatrix, int i, int j) {
 
         Punkt neuerPunkt = null;

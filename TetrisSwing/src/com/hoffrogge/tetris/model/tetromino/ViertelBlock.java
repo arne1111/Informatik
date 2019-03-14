@@ -177,6 +177,11 @@ public class ViertelBlock implements TetrominoSpielstein {
     }
 
     @Override
+    public void rotiereNachRechts() {
+        throw new IllegalStateException("Ein Viertelblock darf nicht mehr rotiert werden!");
+    }
+
+    @Override
     public List<TetrominoSpielstein> getViertelBloecke() {
         throw new IllegalStateException("Ein Viertelblock darf nicht mehr aufgeteilt werden!");
     }
