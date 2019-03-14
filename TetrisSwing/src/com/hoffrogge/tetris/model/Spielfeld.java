@@ -19,184 +19,187 @@ import com.hoffrogge.tetris.model.tetromino.TetrominoTyp;
 @SuppressWarnings("serial")
 public class Spielfeld extends Canvas {
 
-	private transient TetrominoSpielstein fallenderSpielstein;
-	private TetrominoTyp naechsterSpielsteinTyp = StandardTetrominoFactory.erstelleZufaelligenTetrominoTyp();
-	private List<TetrominoSpielstein> gefalleneSteine;
-	private Spiel spiel;
+    private transient TetrominoSpielstein fallenderSpielstein;
+    private StandardTetrominoFactory      tetrominoFactory;
+    private TetrominoTyp                  naechsterSpielsteinTyp;
+    private List<TetrominoSpielstein>     gefalleneSteine;
+    private Spiel                         spiel;
 
-	public Spielfeld() {
-		/* Konstruktor */
-		gefalleneSteine = new CopyOnWriteArrayList<>();
-	}
+    public Spielfeld() {
+        /* Konstruktor */
+        gefalleneSteine = new CopyOnWriteArrayList<>();
+        tetrominoFactory = new StandardTetrominoFactory();
+        naechsterSpielsteinTyp = tetrominoFactory.erstelleZufaelligenTetrominoTyp();
+    }
 
-	public TetrominoSpielstein getFallenderSpielstein() {
-		return fallenderSpielstein;
-	}
+    public TetrominoSpielstein getFallenderSpielstein() {
+        return fallenderSpielstein;
+    }
 
-	public void setSpiel(Spiel spiel) {
-		this.spiel = spiel;
-	}
+    public void setSpiel(Spiel spiel) {
+        this.spiel = spiel;
+    }
 
-	public void spielerEingabenVerarbeiten() {
-		/* Hier passiert noch nichts. */
-	}
+    public void spielerEingabenVerarbeiten() {
+        /* Hier passiert noch nichts. */
+    }
 
-	public void aktualisieren() {
+    public void aktualisieren() {
 
-		loescheVolleReihen();
+        loescheVolleReihen();
 
-		if (fallenderSpielstein == null)
-			fallenderSpielstein = neuerZufaelligerSpielstein();
+        if (fallenderSpielstein == null)
+            fallenderSpielstein = neuerZufaelligerSpielstein();
 
-		if (fallenderSpielstein != null) {
+        if (fallenderSpielstein != null) {
 
-			fallenderSpielstein.bewegeNachUnten();
+            fallenderSpielstein.bewegeNachUnten();
 
-			if (hatFallenderSteinBodenErreicht() || faelltFallenderSteinAufAnderenStein()) {
+            if (hatFallenderSteinBodenErreicht() || faelltFallenderSteinAufAnderenStein()) {
 
-				List<TetrominoSpielstein> viertelBloecke = fallenderSpielstein.getViertelBloecke();
+                List<TetrominoSpielstein> viertelBloecke = fallenderSpielstein.getViertelBloecke();
 
-				if (viertelBloecke != null)
-					gefalleneSteine.addAll(viertelBloecke);
+                if (viertelBloecke != null)
+                    gefalleneSteine.addAll(viertelBloecke);
 
-				fallenderSpielstein = null;
+                fallenderSpielstein = null;
 
-				spiel.erhoehePunkte();
-			}
-		}
-	}
+                spiel.erhoehePunkte();
+            }
+        }
+    }
 
-	/* Baut hier eure eigenen Spielsteine ein */
-	private TetrominoSpielstein neuerZufaelligerSpielstein() {
+    /* Baut hier eure eigenen Spielsteine ein */
+    private TetrominoSpielstein neuerZufaelligerSpielstein() {
 
-		TetrominoSpielstein tetromino = StandardTetrominoFactory.erstelleTetromino(naechsterSpielsteinTyp);
+        TetrominoSpielstein tetromino = tetrominoFactory.erstelleTetromino(naechsterSpielsteinTyp);
 
-		naechsterSpielsteinTyp = StandardTetrominoFactory.erstelleZufaelligenTetrominoTyp();
+        naechsterSpielsteinTyp = tetrominoFactory.erstelleZufaelligenTetrominoTyp();
 
-		return tetromino;
-	}
+        return tetromino;
+    }
 
-	public void darstellen() {
+    public void darstellen() {
 
-		Graphics g = null;
+        Graphics g = null;
 
-		try {
+        try {
 
-			g = getBufferStrategy().getDrawGraphics();
+            g = getBufferStrategy().getDrawGraphics();
 
-			zeichneSpielfeld(g);
+            zeichneSpielfeld(g);
 
-			if (!spiel.isPause()) {
+            if (!spiel.isPause()) {
 
-				if (fallenderSpielstein != null)
-					fallenderSpielstein.zeichnen(g);
+                if (fallenderSpielstein != null)
+                    fallenderSpielstein.zeichnen(g);
 
-				for (GeometrischeFigur gefallenerStein : gefalleneSteine)
-					gefallenerStein.zeichnen(g);
+                for (GeometrischeFigur gefallenerStein : gefalleneSteine)
+                    gefallenerStein.zeichnen(g);
 
-			} else {
-				zeichnePauseSchriftzug(g);
-			}
+            } else {
+                zeichnePauseSchriftzug(g);
+            }
 
-		} finally {
-			if (g != null)
-				g.dispose();
-		}
+        } finally {
+            if (g != null)
+                g.dispose();
+        }
 
-		getBufferStrategy().show();
-	}
+        getBufferStrategy().show();
+    }
 
-	public boolean istSpielfeldVoll() {
+    public boolean istSpielfeldVoll() {
 
-		for (TetrominoSpielstein gefallenerStein : gefalleneSteine) {
+        for (TetrominoSpielstein gefallenerStein : gefalleneSteine) {
 
-			if (gefallenerStein.getHoechstesY() <= 0)
-				return true;
-		}
+            if (gefallenerStein.getHoechstesY() <= 0)
+                return true;
+        }
 
-		return false;
-	}
+        return false;
+    }
 
-	private static void zeichneSpielfeld(Graphics g) {
+    private static void zeichneSpielfeld(Graphics g) {
 
-		/* Hintergrund des Spielfeldes */
-		g.setColor(TetrisKonstanten.VORDERGRUND.konvertiereZuColor());
-		g.fillRect(0, 0, TetrisKonstanten.SPIELFELD_BREITE, TetrisKonstanten.SPIELFELD_HOEHE);
-	}
+        /* Hintergrund des Spielfeldes */
+        g.setColor(TetrisKonstanten.VORDERGRUND.konvertiereZuColor());
+        g.fillRect(0, 0, TetrisKonstanten.SPIELFELD_BREITE, TetrisKonstanten.SPIELFELD_HOEHE);
+    }
 
-	private void zeichnePauseSchriftzug(Graphics g) {
+    private void zeichnePauseSchriftzug(Graphics g) {
 
-		Font font = new Font("Arial Black", Font.BOLD, TetrisKonstanten.BLOCK_BREITE);
+        Font font = new Font("Arial Black", Font.BOLD, TetrisKonstanten.BLOCK_BREITE);
 
-		g.setColor(TetrisKonstanten.AKZENT.konvertiereZuColor());
-		g.setFont(font);
+        g.setColor(TetrisKonstanten.AKZENT.konvertiereZuColor());
+        g.setFont(font);
 
-		g.drawString("Pause", TetrisKonstanten.SPIELFELD_BREITE / 2 - TetrisKonstanten.BLOCK_BREITE * 2,
-				TetrisKonstanten.SPIELFELD_HOEHE / 2);
-	}
+        g.drawString("Pause", TetrisKonstanten.SPIELFELD_BREITE / 2 - TetrisKonstanten.BLOCK_BREITE * 2,
+                TetrisKonstanten.SPIELFELD_HOEHE / 2);
+    }
 
-	public TetrominoTyp getNaechsterSpielsteinTyp() {
-		return naechsterSpielsteinTyp;
-	}
+    public TetrominoTyp getNaechsterSpielsteinTyp() {
+        return naechsterSpielsteinTyp;
+    }
 
-	private boolean hatFallenderSteinBodenErreicht() {
-		return fallenderSpielstein.getTiefstesY() >= TetrisKonstanten.SPIELFELD_HOEHE;
-	}
+    private boolean hatFallenderSteinBodenErreicht() {
+        return fallenderSpielstein.getTiefstesY() >= TetrisKonstanten.SPIELFELD_HOEHE;
+    }
 
-	private boolean faelltFallenderSteinAufAnderenStein() {
+    private boolean faelltFallenderSteinAufAnderenStein() {
 
-		if (gefalleneSteine.isEmpty())
-			return false;
+        if (gefalleneSteine.isEmpty())
+            return false;
 
-		for (TetrominoSpielstein block : gefalleneSteine)
-			if (fallenderSpielstein.faelltAuf(block))
-				return true;
+        for (TetrominoSpielstein block : gefalleneSteine)
+            if (fallenderSpielstein.faelltAuf(block))
+                return true;
 
-		return false;
-	}
+        return false;
+    }
 
-	private void loescheVolleReihen() {
+    private void loescheVolleReihen() {
 
-		Collections.sort(gefalleneSteine);
+        Collections.sort(gefalleneSteine);
 
-		Map<Integer, List<TetrominoSpielstein>> bloeckeProReihe = new HashMap<>();
+        Map<Integer, List<TetrominoSpielstein>> bloeckeProReihe = new HashMap<>();
 
-		for (TetrominoSpielstein block : gefalleneSteine) {
+        for (TetrominoSpielstein block : gefalleneSteine) {
 
-			List<TetrominoSpielstein> blockListe = bloeckeProReihe.get(block.getY());
+            List<TetrominoSpielstein> blockListe = bloeckeProReihe.get(block.getY());
 
-			if (blockListe == null)
-				blockListe = new ArrayList<>();
+            if (blockListe == null)
+                blockListe = new ArrayList<>();
 
-			blockListe.add(block);
+            blockListe.add(block);
 
-			bloeckeProReihe.put(block.getY(), blockListe);
-		}
+            bloeckeProReihe.put(block.getY(), blockListe);
+        }
 
-		for (Entry<Integer, List<TetrominoSpielstein>> reihe : bloeckeProReihe.entrySet()) {
+        for (Entry<Integer, List<TetrominoSpielstein>> reihe : bloeckeProReihe.entrySet()) {
 
-			List<TetrominoSpielstein> blockListe = reihe.getValue();
+            List<TetrominoSpielstein> blockListe = reihe.getValue();
 
-			if (blockListe.size() == TetrisKonstanten.SPIELFELD_BREITE / TetrisKonstanten.BLOCK_BREITE)
-				loescheReihe(blockListe);
-		}
-	}
+            if (blockListe.size() == TetrisKonstanten.SPIELFELD_BREITE / TetrisKonstanten.BLOCK_BREITE)
+                loescheReihe(blockListe);
+        }
+    }
 
-	private void loescheReihe(List<TetrominoSpielstein> blockListe) {
+    private void loescheReihe(List<TetrominoSpielstein> blockListe) {
 
-		int hoehe = 0;
+        int hoehe = 0;
 
-		for (TetrominoSpielstein block : blockListe) {
+        for (TetrominoSpielstein block : blockListe) {
 
-			block.setFuellFarbe(new Farbe(255, 60, 255));
-			gefalleneSteine.remove(block);
-			hoehe = block.getY();
-		}
+            block.setFuellFarbe(new Farbe(255, 60, 255));
+            gefalleneSteine.remove(block);
+            hoehe = block.getY();
+        }
 
-		for (TetrominoSpielstein block : gefalleneSteine)
-			if (block.getY() < hoehe)
-				block.bewegeNachUnten();
+        for (TetrominoSpielstein block : gefalleneSteine)
+            if (block.getY() < hoehe)
+                block.bewegeNachUnten();
 
-		spiel.erhoeheReihen();
-	}
+        spiel.erhoeheReihen();
+    }
 }

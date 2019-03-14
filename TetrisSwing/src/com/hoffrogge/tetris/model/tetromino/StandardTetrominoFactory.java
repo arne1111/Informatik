@@ -5,77 +5,76 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Random;
 
-public class StandardTetrominoFactory {
+public class StandardTetrominoFactory implements TetrominoFactory {
 
-	private static final List<TetrominoTyp> TYPEN = Collections.unmodifiableList(Arrays.asList(TetrominoTyp.values()));
-	private static final int ANZAHL = TYPEN.size();
-	private static final Random ZUFALL = new Random();
+    private static final List<TetrominoTyp> TYPEN  = Collections.unmodifiableList(Arrays.asList(TetrominoTyp.values()));
+    private static final int                ANZAHL = TYPEN.size();
+    private static final Random             ZUFALL = new Random();
 
-	private StandardTetrominoFactory() {
-		/* diese Factory hat nur statische Methoden */
-	}
+    @Override
+    public TetrominoTyp erstelleZufaelligenTetrominoTyp() {
+        return TYPEN.get(ZUFALL.nextInt(ANZAHL));
+    }
 
-	public static TetrominoTyp erstelleZufaelligenTetrominoTyp() {
-		return TYPEN.get(ZUFALL.nextInt(ANZAHL));
-	}
+    @Override
+    public TetrominoSpielstein erstelleTetromino(TetrominoTyp typ) {
 
-	public static TetrominoSpielstein erstelleTetromino(TetrominoTyp typ) {
+        switch (typ) {
 
-		switch (typ) {
+            case BLOCK:
+                return new TetrominoBlock();
 
-		case BLOCK:
-			return new TetrominoBlock();
+            case LANGER:
+                return new TetrominoLanger();
 
-		case LANGER:
-			return new TetrominoLanger();
+            case L:
+                return new TetrominoL();
 
-		case L:
-			return new TetrominoL();
+            case UMGEDREHTES_L:
+                return new TetrominoUmgedrehtesL();
 
-		case UMGEDREHTES_L:
-			return new TetrominoUmgedrehtesL();
+            case T:
+                return new TetrominoT();
 
-		case T:
-			return new TetrominoT();
+            case Z:
+                return new TetrominoZ();
 
-		case Z:
-			return new TetrominoZ();
+            case UMGEDREHTES_Z:
+                return new TetrominoUmgedrehtesZ();
 
-		case UMGEDREHTES_Z:
-			return new TetrominoUmgedrehtesZ();
+            default:
+                throw new IllegalStateException("TetrominoTyp " + typ + " ist nicht bekannt!");
+        }
+    }
 
-		default:
-			throw new IllegalStateException("TetrominoTyp " + typ + " ist nicht bekannt!");
-		}
-	}
+    @Override
+    public TetrominoSpielstein erstelleTetromino(TetrominoTyp typ, int x, int y) {
 
-	public static TetrominoSpielstein erstelleTetromino(TetrominoTyp typ, int x, int y) {
+        switch (typ) {
 
-		switch (typ) {
+            case BLOCK:
+                return new TetrominoBlock(x, y);
 
-		case BLOCK:
-			return new TetrominoBlock(x, y);
+            case LANGER:
+                return new TetrominoLanger(x, y);
 
-		case LANGER:
-			return new TetrominoLanger(x, y);
+            case L:
+                return new TetrominoL(x, y);
 
-		case L:
-			return new TetrominoL(x, y);
+            case UMGEDREHTES_L:
+                return new TetrominoUmgedrehtesL(x, y);
 
-		case UMGEDREHTES_L:
-			return new TetrominoUmgedrehtesL(x, y);
+            case T:
+                return new TetrominoT(x, y);
 
-		case T:
-			return new TetrominoT(x, y);
+            case Z:
+                return new TetrominoZ(x, y);
 
-		case Z:
-			return new TetrominoZ(x, y);
+            case UMGEDREHTES_Z:
+                return new TetrominoUmgedrehtesZ(x, y);
 
-		case UMGEDREHTES_Z:
-			return new TetrominoUmgedrehtesZ(x, y);
-
-		default:
-			throw new IllegalStateException("TetrominoTyp " + typ + " ist nicht bekannt!");
-		}
-	}
+            default:
+                throw new IllegalStateException("TetrominoTyp " + typ + " ist nicht bekannt!");
+        }
+    }
 }
